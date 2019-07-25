@@ -1,21 +1,15 @@
 import React from 'react';
-import Article from './components/Article';
+import ArticleList from './components/ArticleList';
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import articles from './fixtures';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App container">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Demo Article component:</p>
-
-        <Article article={articles[0]} foo="bar" flag={true} />
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -24,6 +18,12 @@ function App() {
           Learn React
         </a>
       </header>
+
+      <div>
+        <p>Article list:</p>
+        <ArticleList articles={articles}/>
+      </div>
+
     </div>
   );
 }
