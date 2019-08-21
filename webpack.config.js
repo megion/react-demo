@@ -86,7 +86,6 @@ module.exports = {
         test: /\.less$/,
         use: [
           // creates style nodes from JS strings
-          //MiniCssExtractPlugin.loader,
           {loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
           // translates CSS into CommonJS
           'css-loader',
