@@ -9,15 +9,20 @@ class ArticleList extends Component {
   }
 
   render() {
-    const articleElements = this.articles.map(article => {
+    return <ul className="article-list">{this.buildArticleElements()}</ul>;
+  }
+
+  buildArticleElements = () => {
+    const articleElements = this.articles.map((article, index) => {
       return (
         <li className="article-list__li" key={article.id}>
-          <Article article={article} />
+          <Article article={article} defaultOpen={index === 0} />
         </li>
       );
     });
-    return <ul className="article-list">{articleElements}</ul>;
-  }
+
+    return articleElements;
+  };
 }
 
 export default ArticleList;
