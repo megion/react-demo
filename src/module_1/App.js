@@ -17,7 +17,12 @@ class App extends Component {
   }
 
   render() {
-    const arts = this.state.reverted ? articles.reverse() : articles;
+    console.log("render state: ", this.state);
+
+    let copyAtrticles = articles.slice();
+    if (this.state.reverted) {
+      copyAtrticles = copyAtrticles.reverse();
+    }
     return (
       <div className="App container">
         <div className="jumbotron">
@@ -30,7 +35,7 @@ class App extends Component {
 
         <div>
           <p>Article list:</p>
-          <ArticleList articles={arts} />
+          <ArticleList articles={copyAtrticles} />
         </div>
       </div>
     );
