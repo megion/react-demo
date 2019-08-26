@@ -38,6 +38,13 @@ module.exports = {
   },
 
   plugins: [
+    //new webpack.DefinePlugin({
+      //'process.env': {
+        //NODE_ENV: devMode
+          //? JSON.stringify('development')
+          //: JSON.stringify('production'),
+      //},
+    //}),
     //new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({

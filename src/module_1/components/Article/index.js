@@ -1,6 +1,16 @@
 import React, {Component, PureComponent} from 'react';
+import PropTypes from 'prop-types';
+import CommentList from '../CommentList';
 
 class Article extends PureComponent {
+  static propTypes = {
+    article: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string,
+    }).isRequired,
+  };
+
   constructor(props) {
     super(props);
   }
@@ -26,7 +36,10 @@ class Article extends PureComponent {
       <div className="Article">
         <p>{article.title}</p>
         <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
-        <section style={bodyStyle}>{article.text}</section>
+        <section style={bodyStyle}>
+          {article.text}
+          <CommentList comments={article.comments} />
+        </section>
         create date: {new Date().toDateString()}
       </div>
     );
