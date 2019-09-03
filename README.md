@@ -13,10 +13,10 @@ Open demo page in browser for examples:
 
 ## Run webpack-dev-server
 
-    $ npm run wds 
+    $ npm run server 
 
 Open demo page: [http://localhost:9000/module1.html](http://localhost:9000/module1.html)
 
 ## Run webpack-dev-server in hot-module-replacement
 
-    $ npm run wds-hot
+    $ npm run server:hot

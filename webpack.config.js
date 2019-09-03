@@ -10,6 +10,10 @@ var mode = argv.mode;
 const devMode = mode === 'development';
 
 module.exports = {
+  mode: mode,
+  watchOptions: {
+    ignored: /node_modules/,
+  },
   context: path.resolve(__dirname, './src'),
   entry: {
     // create entry point (and lib with name 'module1' from ./module_1/index.js
@@ -39,11 +43,11 @@ module.exports = {
 
   plugins: [
     //new webpack.DefinePlugin({
-      //'process.env': {
-        //NODE_ENV: devMode
-          //? JSON.stringify('development')
-          //: JSON.stringify('production'),
-      //},
+    //'process.env': {
+    //NODE_ENV: devMode
+    //? JSON.stringify('development')
+    //: JSON.stringify('production'),
+    //},
     //}),
     //new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),

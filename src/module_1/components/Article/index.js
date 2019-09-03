@@ -1,6 +1,7 @@
 import React, {Component, PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import CommentList from '../CommentList';
+import toggleOpen from '../../decorators/toggleOpen';
 
 class Article extends PureComponent {
   static propTypes = {
@@ -20,9 +21,15 @@ class Article extends PureComponent {
    */
   render() {
     /*
+     * here we have actual DOM node
+    */
+    function processNode(articleNode) {
+      console.log("article node:", articleNode);
+    }
+    /*
      * onCloseClick - for change parent state (reverse data flow)
      */
-    const {article, isOpen, onCloseClick} = this.props;
+    const {article, isOpen, onCloseClick, toggleOpen} = this.props;
 
     let bodyStyle = {
       fontSize: '12px',
@@ -32,10 +39,11 @@ class Article extends PureComponent {
       delete bodyStyle.display;
     }
 
+    // <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
     return (
-      <div className="Article">
+      <div className="Article" ref={processNode}>
         <p>{article.title}</p>
-        <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
+        <button onClick={toggleOpen}>{isOpen ? 'Close' : 'Open'}</button>
         <section style={bodyStyle}>
           {article.text}
           <CommentList comments={article.comments} />
@@ -150,4 +158,4 @@ class Article extends PureComponent {
   }
 }
 
-export default Article;
+export default toggleOpen(Article);
