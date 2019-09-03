@@ -1,7 +1,7 @@
 import React, {Component as ReactComponent} from 'react';
 
 function getWrapper(OriginalComponent) {
-  return class WrappedComponent extends ReactComponent {
+  return class ToggleOpen extends ReactComponent {
     constructor(props) {
       super(props);
 
