@@ -1,42 +1,30 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Article from '../Article';
 import './index.less';
+import common from 'common'; // common library
 
 class ArticleList extends Component {
-  constructor(props) {
-    super(props);
-
-    /*
-     * Store children component state in parent.
-     * Article state parameter 'open' is passed to children by prop 'isOpen'
-     * This approach is called State Lifting.
-     */
-    this.state = {
-      openArticleId: null,
-    };
-  }
-
-  /*
-   * Function is passed to the children components.
-   * This approach is called Reverse Data Flow.
-   */
-  closeArticle = articleId => {
-    let openArticleId = articleId;
-    // if already open - close it (all will be closed)
-    if (this.state.openArticleId === articleId) {
-      openArticleId = null;
-    }
-    this.setState({openArticleId: openArticleId});
+  static propTypes = {
+    articles: PropTypes.array.isRequired,
+    // from accordion
+    openItemId: PropTypes.string,
+    toggleOpenItem: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const articleElements = this.props.articles.map((article, index) => {
+    const {articles, openItemId, toggleOpenItem} = this.props;
+    const articleElements = articles.map((article, index) => {
       return (
         <li className="article-list__li" key={article.id}>
           <Article
             article={article}
-            isOpen={this.state.openArticleId === article.id}
-            onCloseClick={this.closeArticle.bind(this, article.id)}
+            isOpen={openItemId === article.id}
+            onCloseClick={toggleOpenItem(article.id, event)}
           />
         </li>
       );
@@ -46,4 +34,4 @@ class ArticleList extends Component {
   }
 }
 
-export default ArticleList;
+export default common.accordion(ArticleList);

@@ -1,7 +1,7 @@
 import React, {Component, PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import CommentList from '../CommentList';
-import toggleOpen from '../../decorators/toggleOpen';
+import common from 'common'; // common library
 
 class Article extends PureComponent {
   static propTypes = {
@@ -10,6 +10,8 @@ class Article extends PureComponent {
       title: PropTypes.string.isRequired,
       text: PropTypes.string,
     }).isRequired,
+    isOpen: PropTypes.bool,
+    toggleOpen: PropTypes.func,
   };
 
   constructor(props) {
@@ -22,9 +24,9 @@ class Article extends PureComponent {
   render() {
     /*
      * here we have actual DOM node
-    */
+     */
     function processNode(articleNode) {
-      console.log("article node:", articleNode);
+      console.log('article node:', articleNode);
     }
     /*
      * onCloseClick - for change parent state (reverse data flow)
@@ -46,18 +48,19 @@ class Article extends PureComponent {
         <button onClick={toggleOpen}>{isOpen ? 'Close' : 'Open'}</button>
         <section style={bodyStyle}>
           {article.text}
-          <CommentList comments={article.comments} />
+          <CommentList
+            comments={article.comments}
+            ref={this.setComponentListRef}
+          />
         </section>
         create date: {new Date().toDateString()}
       </div>
     );
   }
 
-  //close = () => {
-  //this.setState({
-  //isOpen: !this.state.isOpen,
-  //});
-  //};
+  setComponentListRef = (ref) => {
+    console.log('setComponentListRef', ref);
+  };
 
   /*
    *
@@ -158,4 +161,4 @@ class Article extends PureComponent {
   }
 }
 
-export default toggleOpen(Article);
+export default common.toggleOpen(Article);

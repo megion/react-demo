@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Comment from '../Comment';
 import './index.less';
-import toggleOpen from '../../decorators/toggleOpen';
+import common from 'common'; // common library
 
 class CommentList extends Component {
   /**
@@ -47,4 +47,4 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList);
+export default common.toggleOpen(CommentList);

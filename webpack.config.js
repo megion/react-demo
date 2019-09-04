@@ -18,6 +18,7 @@ module.exports = {
   entry: {
     // create entry point (and lib with name 'module1' from ./module_1/index.js
     module1: './module_1',
+    common: './common',
   }, // string | object | array
   // Here the application starts executing
   // and webpack starts bundling
@@ -68,6 +69,13 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
+
+
+  resolve: {
+    alias: {
+      common$: path.resolve(__dirname, 'src/common/index.js')
+    }
+  },
 
   module: {
     rules: [
