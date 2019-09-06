@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ArticleList from './components/ArticleList';
+import UserForm from './components/UserForm';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,7 +18,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("render state: ", this.state);
+    console.log('render state: ', this.state);
 
     let copyAtrticles = articles.slice();
     if (this.state.reverted) {
@@ -25,6 +26,7 @@ class App extends Component {
     }
     return (
       <div className="App container">
+        <UserForm articles={copyAtrticles} />
         <div className="jumbotron">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="display-3">Module 1</h1>

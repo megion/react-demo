@@ -39,11 +39,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "@types/react-transition-group": "^4.2.2",
     "bootstrap": "^4.3.1",
     "flag-icon-css": "^3.3.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-select": "^3.0.4"
   },
   "eslintConfig": {
     "extends": "react-app"
