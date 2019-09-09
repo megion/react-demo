@@ -1,0 +1,17 @@
+/* import presessed by webpack css-loader */
+.article {
+  & .article-body-enter {
+    opacity: 0;
+  }
+  & .article-body-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  & .article-body-exit {
+    opacity: 1;
+  }
+  & .article-body-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+}

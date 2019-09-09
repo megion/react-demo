@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import CommentList from '../CommentList';
 import common from 'common'; // common library
 
+import {CSSTransition} from 'react-transition-group';
+import './index.less';
+
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
@@ -18,6 +21,22 @@ class Article extends PureComponent {
     super(props);
   }
 
+  getBody() {
+    const {article, isOpen} = this.props;
+    //if (!isOpen) {
+    //return null;
+    //}
+    return (
+      <section>
+        {article.text}
+        <CommentList
+          comments={article.comments}
+          ref={this.setComponentListRef}
+        />
+      </section>
+    );
+  }
+
   /*
    * build virtual DOM
    */
@@ -26,39 +45,32 @@ class Article extends PureComponent {
      * here we have actual DOM node
      */
     function processNode(articleNode) {
-      console.log('article node:', articleNode);
+      //console.log('article node:', articleNode);
     }
     /*
      * onCloseClick - for change parent state (reverse data flow)
      */
     const {article, isOpen, onCloseClick, toggleOpen} = this.props;
 
-    let bodyStyle = {
-      fontSize: '12px',
-      display: 'none',
-    };
-    if (isOpen) {
-      delete bodyStyle.display;
-    }
-
     // <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
+    //
     return (
-      <div className="Article" ref={processNode}>
+      <div className="article" ref={processNode}>
         <p>{article.title}</p>
         <button onClick={toggleOpen}>{isOpen ? 'Close' : 'Open'}</button>
-        <section style={bodyStyle}>
-          {article.text}
-          <CommentList
-            comments={article.comments}
-            ref={this.setComponentListRef}
-          />
-        </section>
-        create date: {new Date().toDateString()}
+
+        <CSSTransition
+          in={isOpen}
+          timeout={300}
+          classNames="article-body"
+          unmountOnExit>
+          <div>{this.getBody()}</div>
+        </CSSTransition>
       </div>
     );
   }
 
-  setComponentListRef = (ref) => {
+  setComponentListRef = ref => {
     console.log('setComponentListRef', ref);
   };
 

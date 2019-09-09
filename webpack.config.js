@@ -95,7 +95,8 @@ module.exports = {
         // Adds CSS to the DOM by injecting a <style> tag
         use: [
           // Adds CSS to the DOM by injecting a <style> tag
-          {loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
+          //{loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
+          {loader: MiniCssExtractPlugin.loader},
           // css-loader interprets @import and url()
           // like import/require() and will resolve them
           {loader: 'css-loader'},
@@ -105,7 +106,8 @@ module.exports = {
         test: /\.less$/,
         use: [
           // creates style nodes from JS strings
-          {loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
+          //{loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
+          {loader: MiniCssExtractPlugin.loader},
           // translates CSS into CommonJS
           'css-loader',
           // compiles Less to CSS
