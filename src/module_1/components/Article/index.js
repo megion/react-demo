@@ -1,28 +1,28 @@
-import React, {Component, PureComponent} from 'react';
-import PropTypes from 'prop-types';
-import CommentList from '../CommentList';
-import common from 'common'; // common library
+import React, { Component, PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import CommentList from '../CommentList'
+import common from 'common' // common library
 
-import {CSSTransition} from 'react-transition-group';
-import './index.less';
+import { CSSTransition } from 'react-transition-group'
+import './index.less'
 
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      text: PropTypes.string,
+      text: PropTypes.string
     }).isRequired,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func,
-  };
+    toggleOpen: PropTypes.func
+  }
 
   constructor(props) {
     super(props);
   }
 
   getBody() {
-    const {article, isOpen} = this.props;
+    const { article, isOpen } = this.props
     //if (!isOpen) {
     //return null;
     //}
@@ -34,7 +34,7 @@ class Article extends PureComponent {
           ref={this.setComponentListRef}
         />
       </section>
-    );
+    )
   }
 
   /*
@@ -50,7 +50,7 @@ class Article extends PureComponent {
     /*
      * onCloseClick - for change parent state (reverse data flow)
      */
-    const {article, isOpen, onCloseClick, toggleOpen} = this.props;
+    const { article, isOpen, onCloseClick, toggleOpen } = this.props
 
     // <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
     //
@@ -63,16 +63,17 @@ class Article extends PureComponent {
           in={isOpen}
           timeout={300}
           classNames="article-body"
-          unmountOnExit>
+          unmountOnExit
+        >
           <div>{this.getBody()}</div>
         </CSSTransition>
       </div>
-    );
+    )
   }
 
   setComponentListRef = ref => {
-    console.log('setComponentListRef', ref);
-  };
+    console.log('setComponentListRef', ref)
+  }
 
   /*
    *
@@ -173,4 +174,4 @@ class Article extends PureComponent {
   }
 }
 
-export default common.toggleOpen(Article);
+export default common.toggleOpen(Article)

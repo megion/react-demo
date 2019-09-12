@@ -1,28 +1,28 @@
-import React, {Component} from 'react';
-import ArticleList from './components/ArticleList';
-import UserForm from './components/UserForm';
-import logo from './logo.svg';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import articles from './fixtures';
+import React, { Component } from "react"
+import ArticleList from "./components/ArticleList"
+import UserForm from "./components/UserForm"
+import logo from "./logo.svg"
+import "./App.css"
+import "bootstrap/dist/css/bootstrap.css"
+import articles from "./fixtures"
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    console.log('App props', this.props);
+    console.log("App props", this.props);
 
     this.state = {
       reverted: false,
-    };
+    }
   }
 
   render() {
-    console.log('render state: ', this.state);
+    console.log("render state: ", this.state)
 
-    let copyAtrticles = articles.slice();
+    let copyAtrticles = articles.slice()
     if (this.state.reverted) {
-      copyAtrticles = copyAtrticles.reverse();
+      copyAtrticles = copyAtrticles.reverse()
     }
     return (
       <div className="App container">
@@ -40,14 +40,14 @@ class App extends Component {
           <ArticleList articles={copyAtrticles} />
         </div>
       </div>
-    );
+    )
   }
 
   revert = () => {
     this.setState({
       reverted: !this.state.reverted,
-    });
-  };
+    })
+  }
 }
 
-export default App;
+export default App

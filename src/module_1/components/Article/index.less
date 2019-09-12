@@ -2,16 +2,19 @@
 .article {
   & .article-body-enter {
     opacity: 0;
+    transition: scale(0.9);
   }
   & .article-body-enter-active {
     opacity: 1;
-    transition: opacity 200ms;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
   }
   & .article-body-exit {
     opacity: 1;
   }
   & .article-body-exit-active {
     opacity: 0;
-    transition: opacity 200ms;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
   }
 }
