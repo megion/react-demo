@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-import './index.less'
+import "./index.less"
 
 class CommentForm extends Component {
   static propTypes = {}
@@ -10,48 +10,62 @@ class CommentForm extends Component {
     super(props)
 
     this.state = {
-      user: '',
-      text: '',
+      user: "",
+      text: "",
+      submitted: false,
     }
   }
 
   render() {
     return (
-      <div onSubmit={this.onSubmit}>
-        <form>
-          <div className="form-group">
-            <label htmlFor="userName">User</label>
-            <input
-              type="text"
-              className="form-control"
-              id="userName"
-              placeholder="Enter name"
-              value={this.state.user}
-              onChange={this.onChange}
-            />
-          </div>
+      <form
+        onSubmit={this.onSubmit}
+        className={`needs-validation ${
+          this.state.submitted ? "was-validated" : ""
+        }`}
+        novalidate
+      >
 
-          <div className="form-group">
-            <label htmlFor="userName">User</label>
-            <input
-              type="text"
-              className="form-control"
-              id="userName"
-              placeholder="Enter name"
-              value={this.state.user}
-              onChange={this.onChange}
-            />
-          </div>
-        </form>
-      </div>
+        <div className="form-group">
+          <label htmlFor="userName">User</label>
+          <input
+            type="text"
+            className="form-control"
+            id="userName"
+            placeholder="Enter name"
+            value={this.state.user}
+            onChange={this.onChange('user')}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="commentTxt">Comment</label>
+          <input
+            type="text"
+            className="form-control"
+            id="commentTxt"
+            placeholder="Enter comment"
+            value={this.state.text}
+            onChange={this.onChange('text')}
+          />
+        </div>
+      </form>
     )
   }
 
   onSubmit = ev => {
     ev.preventDefault()
     this.setState({
-      user: '',
-      text: '',
+      user: "",
+      text: "",
+      submitted: true,
+    })
+  }
+
+  onChange = type => ev => {
+    const {value} = ev.target
+    this.setState({
+      [type]: value
     })
   }
 }

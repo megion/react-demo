@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Comment from '../Comment';
 import './index.less';
+import CommentForm from './CommentForm';
 import common from 'common'; // common library
 
 class CommentList extends Component {
@@ -19,6 +20,7 @@ class CommentList extends Component {
     const text = this.props.isOpen ? 'hide comments' : 'show comments';
     return (
       <div>
+        <CommentForm/>
         <button onClick={this.props.toggleOpen}>{text}</button>
         {this.getBody()}
       </div>

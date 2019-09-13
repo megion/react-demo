@@ -1,7 +1,6 @@
-import React, {Component, PureComponent} from 'react';
-import CommentList from 'react';
+import React, {Component} from 'react';
 
-class Comment extends PureComponent {
+class Comment extends Component {
   constructor(props) {
     super(props);
   }
