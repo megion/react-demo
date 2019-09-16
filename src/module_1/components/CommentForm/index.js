@@ -23,7 +23,7 @@ class CommentForm extends Component {
         className={`needs-validation ${
           this.state.submitted ? "was-validated" : ""
         }`}
-        novalidate
+        noValidate
       >
 
         <div className="form-group">
@@ -49,6 +49,7 @@ class CommentForm extends Component {
             onChange={this.onChange('text')}
           />
         </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     )
   }
