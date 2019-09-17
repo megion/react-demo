@@ -5,6 +5,7 @@ import logo from "./logo.svg"
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.css"
 import articles from "./fixtures"
+import store from "./store"
 
 class App extends Component {
   constructor(props) {
