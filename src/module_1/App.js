@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import ArticleList from "./components/ArticleList"
 import UserForm from "./components/UserForm"
+import Counter from "./components/Counter"
 import logo from "./logo.svg"
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.css"
-import articles from "./fixtures"
+//import articles from "./fixtures"
 import store from "./store"
 
 class App extends Component {
@@ -19,15 +20,14 @@ class App extends Component {
   }
 
   render() {
-    console.log("render state: ", this.state)
-
-    let copyAtrticles = articles.slice()
-    if (this.state.reverted) {
-      copyAtrticles = copyAtrticles.reverse()
-    }
+    //let copyAtrticles = articles.slice()
+    //if (this.state.reverted) {
+      //copyAtrticles = copyAtrticles.reverse()
+    //}
     return (
       <div className="App container">
-        <UserForm articles={copyAtrticles} />
+        <Counter />
+        <UserForm />
         <div className="jumbotron">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="display-3">Module 1</h1>
@@ -38,7 +38,7 @@ class App extends Component {
 
         <div>
           <p>Article list:</p>
-          <ArticleList articles={copyAtrticles} />
+          <ArticleList />
         </div>
       </div>
     )

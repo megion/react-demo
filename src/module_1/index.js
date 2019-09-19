@@ -8,11 +8,10 @@ import './index.css';
  * load module dynamical
  */
 function loadModuleApp() {
-  var App;
-  import('./App').then(function(appModule) {
-    App = appModule.default;
-    ReactDOM.render(<App />, document.getElementById('root'));
-    //return import('./fixtures');
+  var Root;
+  import('./Root').then(function(appModule) {
+    Root = appModule.default;
+    ReactDOM.render(<Root />, document.getElementById('root'));
   });
   //.then(function(itemsModule) {
   //let pandaMenu = new Menu({
