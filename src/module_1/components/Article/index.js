@@ -1,24 +1,26 @@
-import React, { Component, PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import CommentList from '../CommentList'
-import common from 'common' // common library
+import React, { Component, PureComponent } from "react"
+import { connect } from "react-redux"
+import { deleteArticle } from "../../AC"
+import PropTypes from "prop-types"
+import CommentList from "../CommentList"
+import common from "common" // common library
 
-import { CSSTransition } from 'react-transition-group'
-import './index.less'
+import { CSSTransition } from "react-transition-group"
+import "./index.less"
 
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      text: PropTypes.string
+      text: PropTypes.string,
     }).isRequired,
     isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func
+    toggleOpen: PropTypes.func,
   }
 
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   getBody() {
@@ -57,7 +59,8 @@ class Article extends PureComponent {
     return (
       <div className="article" ref={processNode}>
         <p>{article.title}</p>
-        <button onClick={toggleOpen}>{isOpen ? 'Close' : 'Open'}</button>
+        <button onClick={toggleOpen}>{isOpen ? "Close" : "Open"}</button>
+        <button onClick={this.handleDelete}>Delete me</button>
 
         <CSSTransition
           in={isOpen}
@@ -71,8 +74,13 @@ class Article extends PureComponent {
     )
   }
 
+  handleDelete = () => {
+    console.log("delete article")
+    this.props.deleteArticle(this.props.article)
+  }
+
   setComponentListRef = ref => {
-    console.log('setComponentListRef', ref)
+    console.log("setComponentListRef", ref)
   }
 
   /*
@@ -174,4 +182,7 @@ class Article extends PureComponent {
   }
 }
 
-export default common.toggleOpen(Article)
+export default connect(
+  null, // not need get data from store
+  { deleteArticle } // map reducer function to props
+)(common.toggleOpen(Article))

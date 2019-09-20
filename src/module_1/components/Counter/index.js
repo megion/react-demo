@@ -6,6 +6,7 @@ import { increment } from "../../AC"
 class Counter extends Component {
   static propTypes = {
     counter: PropTypes.number,
+    increment: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -40,6 +41,7 @@ class Counter extends Component {
 //const mapToDispatch = {increment}
 //const decorator = connect(mapStateToProps, mapToDispatch)
 //export default decorator(Counter)
+
 
 export default connect(
   state => {

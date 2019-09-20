@@ -1,3 +1,5 @@
+import {INCREMENT_COUNTER} from "../AC/constants"
+import {DECREMENT_COUNTER} from "../AC/constants"
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
  * It describes how an action transforms the state into the next state.
@@ -14,9 +16,9 @@
  */
 function counter(state = 0, action) {
   switch (action.type) {
-    case "INCREMENT":
+    case INCREMENT_COUNTER:
       return state + 1
-    case "DECREMENT":
+    case DECREMENT_COUNTER:
       return state - 1
     default:
       return state

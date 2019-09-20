@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from "react-redux"
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import common from 'common'; // common library
@@ -80,4 +81,11 @@ class UserForm extends Component {
   };
 }
 
-export default UserForm;
+export default connect(
+  state => {
+    return {
+      articles: state.articles,
+    }
+  }
+  //{ increment } // map reducer function to props
+)(UserForm)

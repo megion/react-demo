@@ -1,23 +1,25 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Article from '../Article';
-import './index.less';
-import common from 'common'; // common library
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import Article from "../Article"
+import "./index.less"
+import common from "common" // common library
 
 class ArticleList extends Component {
   static propTypes = {
+    // from redux connect
     articles: PropTypes.array.isRequired,
     // from accordion
     openItemId: PropTypes.string,
-    toggleOpenItem: PropTypes.func.isRequired
-  };
+    toggleOpenItem: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
-    const {articles, openItemId, toggleOpenItem} = this.props;
+    const { articles, openItemId, toggleOpenItem } = this.props
     const articleElements = articles.map((article, index) => {
       return (
         <li className="article-list__li" key={article.id}>
@@ -27,11 +29,18 @@ class ArticleList extends Component {
             onCloseClick={toggleOpenItem(article.id, event)}
           />
         </li>
-      );
-    });
+      )
+    })
 
-    return <ul className="article-list">{articleElements}</ul>;
+    return <ul className="article-list">{articleElements}</ul>
   }
 }
 
-export default common.accordion(ArticleList);
+export default connect(
+  state => {
+    return {
+      articles: state.articles,
+    }
+  }
+  //{ deleteArticle } // map reducer function to props
+)(common.accordion(ArticleList))
