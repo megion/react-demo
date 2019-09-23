@@ -5,11 +5,9 @@ export default (state = defaultArticles, action) => {
   switch (action.type) {
     case DELETE_ARTICLE:
       // return new filtered array
-      console.log("reducer delete article", state, action)
       const newState = state.filter(item => {
-        return item != action.payload.article
+        return item.id !== action.payload.article.id
       })
-      console.log("reducer newState", newState)
       return newState
     //case "ADD_ARTICLE":
     //return state

@@ -1,19 +1,28 @@
-import { DELETE_ARTICLE } from "../AC/constants"
+// Load method categories.
+import { CHANGE_ARTICLE_SELECTION, DELETE_ARTICLE } from "../AC/constants"
 
 const defaultFilters = {
-  selected: []
+  selectedArticles: [],
 }
 
-export default (state = defaultArticles, action) => {
+export default (state = defaultFilters, action) => {
   switch (action.type) {
-    case DELETE_ARTICLE:
-      // return new filtered array
-      const newState = state.filter(item => {
-        return item != action.payload.article
+    case CHANGE_ARTICLE_SELECTION:
+      return Object.assign({}, state, {
+        selectedArticles: action.payload.selected,
       })
+    //return {...state, selectedArticles: action.payload.selected}
+    case DELETE_ARTICLE:
+      const newSelectedArticles = state.selectedArticles
+        ? state.selectedArticles.filter(item => {
+            return item.id !== action.payload.article.id
+          })
+        : state.selectedArticles
+      const newState = {
+        ...state,
+        selectedArticles: newSelectedArticles,
+      }
       return newState
-    //case "ADD_ARTICLE":
-    //return state
     default:
       return state
   }

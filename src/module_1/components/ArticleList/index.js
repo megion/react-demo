@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
+import _ from "lodash"
 import Article from "../Article"
 import "./index.less"
 import common from "common" // common library
@@ -19,6 +20,7 @@ class ArticleList extends Component {
   }
 
   render() {
+    console.log("render articles");
     const { articles, openItemId, toggleOpenItem } = this.props
     const articleElements = articles.map((article, index) => {
       return (
@@ -38,8 +40,19 @@ class ArticleList extends Component {
 
 export default connect(
   state => {
+    const selectedArticles = state.filters.selectedArticles
+    /*
+     * filter articles here using selectedArticles
+     */
+    const filteredArticles = state.articles.filter(article => {
+      return (
+        !selectedArticles ||
+        !selectedArticles.length ||
+        _.find(selectedArticles, { id: article.id })
+      )
+    })
     return {
-      articles: state.articles,
+      articles: filteredArticles
     }
   }
   //{ deleteArticle } // map reducer function to props

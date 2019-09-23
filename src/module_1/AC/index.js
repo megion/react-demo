@@ -1,4 +1,8 @@
-import { DELETE_ARTICLE, INCREMENT_COUNTER } from "./constants"
+import {
+  DELETE_ARTICLE,
+  INCREMENT_COUNTER,
+  CHANGE_ARTICLE_SELECTION,
+} from "./constants"
 
 /*
  * action creators
@@ -13,6 +17,13 @@ export function increment() {
 export function deleteArticle(article) {
   return {
     type: DELETE_ARTICLE,
-    payload: {article} // 'payload' is convention of name
+    payload: { article }, // 'payload' is convention of name
+  }
+}
+
+export function changeArticleSelection(selected) {
+  return {
+    type: CHANGE_ARTICLE_SELECTION,
+    payload: { selected },
   }
 }

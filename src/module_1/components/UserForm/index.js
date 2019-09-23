@@ -1,34 +1,28 @@
-import React, {Component} from 'react';
+import React, { Component } from "react"
 import { connect } from "react-redux"
-import PropTypes from 'prop-types';
-import Select from 'react-select';
-import common from 'common'; // common library
+import { changeArticleSelection } from "../../AC"
+import PropTypes from "prop-types"
+import Select from "react-select"
+import common from "common" // common library
 
 class UserForm extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired,
-  };
+    selectedArticles: PropTypes.array
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      username: '',
-      article: null,
-    };
+      username: "",
+    }
   }
 
   /*
    * build virtual DOM
    */
   render() {
-    const {articles} = this.props;
-    const articleSelectOptions = articles.map(article => {
-      return {
-        label: article.title,
-        value: article.id,
-      };
-    });
     return (
       <div>
         <form>
@@ -52,40 +46,43 @@ class UserForm extends Component {
             <label htmlFor="articleSelect">Select</label>
             <Select
               onChange={this.onChangeArticle}
-              value={this.state.article}
-              options={articleSelectOptions}
+              isMulti
+              options={this.props.articles}
+              value={this.props.selectedArticles}
+              getOptionValue={opt => opt.id}
+              getOptionLabel={opt => opt.title}
             />
           </div>
 
           <div></div>
         </form>
       </div>
-    );
+    )
   }
 
   onChangeUsername = ev => {
     // limit max length
     if (ev.target.value.length > 10) {
-      return;
+      return
     }
 
     this.setState({
       username: ev.target.value,
-    });
-  };
+    })
+  }
 
   onChangeArticle = selection => {
-    this.setState({
-      article: selection,
-    });
-  };
+    console.log("selection", selection)
+    this.props.changeArticleSelection(selection)
+  }
 }
 
 export default connect(
   state => {
     return {
       articles: state.articles,
+      selectedArticles: state.filters.selectedArticles,
     }
-  }
-  //{ increment } // map reducer function to props
+  },
+  { changeArticleSelection } // map reducer function to props
 )(UserForm)
