@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from "prop-types"
 import Comment from '../Comment';
 import './index.less';
 import CommentForm from '../CommentForm';
@@ -37,10 +38,10 @@ class CommentList extends Component {
     }
     return (
       <ul className="comment-list">
-        {comments.map(comment => {
+        {comments.map(commentId => {
           return (
-            <li className="comment-list__li" key={comment.id}>
-              <Comment comment={comment} />
+            <li className="comment-list__li" key={commentId}>
+              <Comment id={commentId} />
             </li>
           );
         })}
