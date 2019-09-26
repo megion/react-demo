@@ -4,12 +4,12 @@
   "description": "react demo",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "profile": "./node_modules/webpack/bin/webpack.js --mode production --profile --display-modules --display-reasons",
-    "build": "./node_modules/webpack/bin/webpack.js --mode=production",
-    "dev": "./node_modules/webpack/bin/webpack.js --mode=development",
-    "watch": "./node_modules/webpack/bin/webpack.js --mode=development --watch --progress",
-    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode=development",
-    "start:hot": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --mode=development"
+    "profile": "webpack --mode production --profile --display-modules --display-reasons",
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development",
+    "watch": "webpack --mode=development --watch --progress",
+    "start": "webpack-dev-server --mode=development --progress",
+    "start:hot": "webpack-dev-server --hot --mode=development --progress"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
