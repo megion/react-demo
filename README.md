@@ -4,19 +4,21 @@
 
     $ npm run dev 
 
-Open demo page in browser for examples:
-`file:///.../webpack-demo/dist/module1.html` 
-
 ## Build for production
 
-    $ npm run build 
+    $ npm run prod 
+
+Open demo page in browser for examples:
+`file:///.../webpack-demo/dist/module_1.html` 
+
 
 ## Run webpack-dev-server
 
-    $ npm run server 
+    $ npm start 
 
-Open demo page: [http://localhost:9000/module1.html](http://localhost:9000/module1.html)
 
 ## Run webpack-dev-server in hot-module-replacement
 
-    $ npm run server:hot
+    $ npm run start:hot
+
+Open demo page: [http://localhost:9000/module_1.html](http://localhost:9000/module_1.html)

@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "profile": "webpack --mode production --profile --display-modules --display-reasons",
-    "build": "webpack --mode=production",
-    "dev": "webpack --mode=development",
+    "prod": "webpack --mode=production --progress",
+    "dev": "webpack --mode=development --progress",
     "watch": "webpack --mode=development --watch --progress",
     "start": "webpack-dev-server --mode=development --progress",
     "start:hot": "webpack-dev-server --hot --mode=development --progress"
