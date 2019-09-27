@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { commentByIdSelector } from "../../selectors/comments"
+import { commentByIdSelectorFactory } from "../../selectors/comments"
 
 class Comment extends Component {
   static propTypes = {
@@ -31,11 +31,24 @@ class Comment extends Component {
   }
 }
 
-export default connect(
-  (state, ownProps) => {
+/*
+ * return function which create function and store commentByIdSelector in
+ * circuit. It is special case suppored by redux for create selector for each
+ * object (comment). It is need in that case because selector should store last
+ * result only for own comment.
+ * Otherwise we will have one selector for many comment and then selector will
+ * not work correctly (because it store only one last function result).
+*/
+function mapStoreStateToPropsFactory() {
+  const commentByIdSelector = commentByIdSelectorFactory()
+  return (state, ownProps) => {
     return {
       comment: commentByIdSelector(state, ownProps),
     }
-  }, // map store data to props
+  }
+}
+
+export default connect(
+  mapStoreStateToPropsFactory, // map store data to props
   null // map reducer function to props
 )(Comment)
