@@ -80,7 +80,7 @@ class UserForm extends Component {
 export default connect(
   state => {
     return {
-      articles: state.articles,
+      articles: common.helpers.mapToArr(state.articles),
       selectedArticles: state.filters.selectedArticles,
     }
   },

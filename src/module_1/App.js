@@ -5,7 +5,6 @@ import Counter from "./components/Counter"
 import logo from "./logo.svg"
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.css"
-//import articles from "./fixtures"
 import store from "./store"
 
 class App extends Component {
@@ -20,10 +19,6 @@ class App extends Component {
   }
 
   render() {
-    //let copyAtrticles = articles.slice()
-    //if (this.state.reverted) {
-      //copyAtrticles = copyAtrticles.reverse()
-    //}
     return (
       <div className="App container">
         <Counter />

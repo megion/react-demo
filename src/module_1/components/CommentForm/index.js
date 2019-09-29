@@ -1,10 +1,16 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { addComment } from "../../AC"
 
 import "./index.less"
 
 class CommentForm extends Component {
-  static propTypes = {}
+  static propTypes = {
+    article: PropTypes.object.isRequired,
+    // from redux connect: addComment(comment, article)
+    addComment: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -25,7 +31,6 @@ class CommentForm extends Component {
         }`}
         noValidate
       >
-
         <div className="form-group">
           <label htmlFor="userName">User</label>
           <input
@@ -34,7 +39,7 @@ class CommentForm extends Component {
             id="userName"
             placeholder="Enter name"
             value={this.state.user}
-            onChange={this.onChange('user')}
+            onChange={this.onChange("user")}
           />
         </div>
 
@@ -46,10 +51,12 @@ class CommentForm extends Component {
             id="commentTxt"
             placeholder="Enter comment"
             value={this.state.text}
-            onChange={this.onChange('text')}
+            onChange={this.onChange("text")}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
       </form>
     )
   }
@@ -61,14 +68,21 @@ class CommentForm extends Component {
       text: "",
       submitted: true,
     })
+    this.props.addComment(
+      { text: this.state.text, user: this.state.user },
+      this.props.article
+    )
   }
 
   onChange = type => ev => {
-    const {value} = ev.target
+    const { value } = ev.target
     this.setState({
-      [type]: value
+      [type]: value,
     })
   }
 }
 
-export default CommentForm
+export default connect(
+  null,
+  { addComment }
+)(CommentForm)

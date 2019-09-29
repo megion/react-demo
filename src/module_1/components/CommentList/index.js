@@ -6,12 +6,19 @@ import CommentForm from '../CommentForm';
 import common from 'common'; // common library
 
 class CommentList extends Component {
+  static propTypes = {
+    article: PropTypes.object.isRequired,
+    // from toggleOpen decorator
+    isOpen: PropTypes.bool,
+    toggleOpen:PropTypes.func 
+  }
+
   /**
    * Default props
    */
-  static defaultProps = {
-    comments: [],
-  };
+  //static defaultProps = {
+    //comments: []
+  //};
 
   constructor(props) {
     super(props);
@@ -21,7 +28,7 @@ class CommentList extends Component {
     const text = this.props.isOpen ? 'hide comments' : 'show comments';
     return (
       <div>
-        <CommentForm/>
+        <CommentForm article={this.props.article}/>
         <button onClick={this.props.toggleOpen}>{text}</button>
         {this.getBody()}
       </div>
@@ -32,7 +39,7 @@ class CommentList extends Component {
     if (!this.props.isOpen) {
       return null;
     }
-    const {comments} = this.props;
+    const {comments} = this.props.article;
     if (!comments.length) {
       return <p>No comments yet</p>;
     }

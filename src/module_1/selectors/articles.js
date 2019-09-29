@@ -1,4 +1,5 @@
 import _ from "lodash"
+import common from "common" // common library
 import { createSelector } from "reselect"
 
 const articlesSelector = state => state.articles
@@ -8,18 +9,22 @@ export const filtrateArticlesSelector = createSelector(
   articlesSelector,
   filtersSelector,
   (articles, filters) => {
-    console.log("filtrateArticles")
     const selectedArticles = filters.selectedArticles
+    console.log("filtrateArticles, articles: ", articles)
     /*
      * filter articles here using selectedArticles
      */
-    const filteredArticles = articles.filter(article => {
-      return (
-        !selectedArticles ||
-        !selectedArticles.length ||
-        _.find(selectedArticles, { id: article.id })
-      )
-    })
+    const filteredArticles = articles;
+    if(selectedArticles && selectedArticles.length) {
+      filteredArticles = common.helpers.filterMap(articles, (id, article) => {
+        return true
+        //return (
+          ////!selectedArticles ||
+          ////!selectedArticles.length ||
+          ////_.find(selectedArticles, { id: article.id })
+        //)
+      })
+    }
     return filteredArticles
   }
 )

@@ -2,6 +2,7 @@ import {
   DELETE_ARTICLE,
   INCREMENT_COUNTER,
   CHANGE_ARTICLE_SELECTION,
+  ADD_COMMENT
 } from "./constants"
 
 /*
@@ -25,5 +26,13 @@ export function changeArticleSelection(selected) {
   return {
     type: CHANGE_ARTICLE_SELECTION,
     payload: { selected },
+  }
+}
+
+export function addComment(comment, article) {
+  return {
+    type: ADD_COMMENT,
+    payload: { comment, article },
+    generateId: true
   }
 }

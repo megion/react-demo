@@ -32,7 +32,7 @@ class Article extends PureComponent {
       <section>
         {article.text}
         <CommentList
-          comments={article.comments}
+          article={article}
           ref={this.setComponentListRef}
         />
       </section>
