@@ -17,6 +17,10 @@ export default (state = common.helpers.arrToMap(defaultArticles), action) => {
 
     case ADD_COMMENT:
       const article = action.payload.article
+      /*
+       * return new copy of articles map and replace target article
+       * with new comments array
+       */
       return {
         ...state,
         [article.id]: {

@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "description": "react demo",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run dev-server\" \"npm run api\"",
     "profile": "webpack --mode production --profile --display-modules --display-reasons",
     "prod": "webpack --mode=production --progress",
     "dev": "webpack --mode=development --progress",
     "watch": "webpack --mode=development --watch --progress",
-    "start": "webpack-dev-server --mode=development --progress",
-    "start:hot": "webpack-dev-server --hot --mode=development --progress"
+    "dev-server": "webpack-dev-server --mode=development --progress",
+    "api": "node simple_api/server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -20,6 +20,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.0.0",
     "css-loader": "^3.1.0",
     "eslint": "^6.3.0",
     "eslint-plugin-react": "^7.14.3",

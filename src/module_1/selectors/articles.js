@@ -11,18 +11,14 @@ export const filtrateArticlesSelector = createSelector(
   (articles, filters) => {
     const selectedArticles = filters.selectedArticles
     console.log("filtrateArticles, articles: ", articles)
+    console.log("filtrateArticles, filters: ", filters)
     /*
      * filter articles here using selectedArticles
      */
-    const filteredArticles = articles;
+    let filteredArticles = articles;
     if(selectedArticles && selectedArticles.length) {
       filteredArticles = common.helpers.filterMap(articles, (id, article) => {
-        return true
-        //return (
-          ////!selectedArticles ||
-          ////!selectedArticles.length ||
-          ////_.find(selectedArticles, { id: article.id })
-        //)
+        return _.find(selectedArticles, { id: article.id }) ? true : false
       })
     }
     return filteredArticles

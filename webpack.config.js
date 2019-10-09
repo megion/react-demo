@@ -1,13 +1,13 @@
-const webpack = require('webpack');
+const webpack = require("webpack")
 //const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
-const path = require('path');
-var argv = require('yargs-parser')(process.argv.slice(2));
-var mode = argv.mode;
-const devMode = mode === 'development';
+const path = require("path")
+var argv = require("yargs-parser")(process.argv.slice(2))
+var mode = argv.mode
+const devMode = mode === "development"
 
 module.exports = {
   mode: mode,
@@ -18,34 +18,34 @@ module.exports = {
      * If watching does not work for you,
      * try out this option.
      * Watching does not work with NFS and machines in VirtualBox.
-    */
-    poll: 1000
+     */
+    poll: 1000,
   },
-  context: path.resolve(__dirname, './src'),
+  context: path.resolve(__dirname, "./src"),
   entry: {
     // create entry point (and lib with name 'module1' from ./module_1/index.js
-    module1: './module_1',
-    common: './common',
+    module1: "./module_1",
+    common: "./common",
   }, // string | object | array
   // Here the application starts executing
   // and webpack starts bundling
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, "dist"),
     // the target directory for all output files
     // must be an absolute path (use the Node.js path module)
 
     //filename: devMode ? '[name].js' : '[name].[hash].js',
-    filename: '[name].[hash].js',
+    filename: "[name].[hash].js",
     // the filename template for entry chunks
 
-    library: '[name]',
+    library: "[name]",
     // the name of the exported library
 
-    publicPath: '', // string
+    publicPath: "", // string
     // the url to the output directory resolved relative to the HTML page
 
-    libraryTarget: 'umd', // universal module definition
+    libraryTarget: "umd", // universal module definition
     // the type of the exported library
   },
 
@@ -63,25 +63,24 @@ module.exports = {
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       //filename: devMode ? '[name].css' : '[name].[hash].css',
-      filename: '[name].[hash].css',
+      filename: "[name].[hash].css",
       //chunkFilename: devMode ? '[id].[name].css' : '[id].[name].[hash].css'
-      chunkFilename: '[id].[name].[hash].css',
+      chunkFilename: "[id].[name].[hash].css",
     }),
     new HtmlWebpackPlugin({
-      filename: 'module_1.html', // target file -> dist/module_1.html
+      filename: "module_1.html", // target file -> dist/module_1.html
       inject: true,
-      chunks: ['module1'],
-      template: 'module_1/index.html',
+      chunks: ["module1"],
+      template: "module_1/index.html",
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 
-
   resolve: {
     alias: {
-      common$: path.resolve(__dirname, 'src/common/index.js')
-    }
+      common$: path.resolve(__dirname, "src/common/index.js"),
+    },
   },
 
   module: {
@@ -90,9 +89,9 @@ module.exports = {
         test: /\.js$/,
         //exclude: /node_modules/,
         include: /src/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
-          presets: ['@babel/preset-env'],
+          presets: ["@babel/preset-env"],
           //"plugins": ["transform-es2015-modules-umd"]
         },
         // options for the loader
@@ -103,10 +102,10 @@ module.exports = {
         use: [
           // Adds CSS to the DOM by injecting a <style> tag
           //{loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
-          {loader: MiniCssExtractPlugin.loader},
+          { loader: MiniCssExtractPlugin.loader },
           // css-loader interprets @import and url()
           // like import/require() and will resolve them
-          {loader: 'css-loader'},
+          { loader: "css-loader" },
         ],
       },
       {
@@ -114,18 +113,18 @@ module.exports = {
         use: [
           // creates style nodes from JS strings
           //{loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader},
-          {loader: MiniCssExtractPlugin.loader},
+          { loader: MiniCssExtractPlugin.loader },
           // translates CSS into CommonJS
-          'css-loader',
+          "css-loader",
           // compiles Less to CSS
-          'less-loader',
+          "less-loader",
         ],
       },
       {
         test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
               //name: '[name].[ext]'
               name: function(file) {
@@ -133,7 +132,7 @@ module.exports = {
                 //return '[path][name].[ext]';
                 //}
 
-                return '[path][name].[hash].[ext]';
+                return "[path][name].[hash].[ext]"
               },
             },
           },
@@ -165,12 +164,19 @@ module.exports = {
   },
 
   watch: devMode,
-  devtool: devMode ? 'source-map' : false, // enum
+  devtool: devMode ? "source-map" : false, // enum
   // enhance debugging by adding meta info for the browser devtools
   // source-map most detailed at the expense of build speed.
 
   devServer: {
     port: 9000,
+    proxy: [
+      // add proxy for simple_api
+      {
+        path: "/api/",
+        target: "http://localhost:3000",
+      },
+    ],
     //hot: true
   },
-};
+}
