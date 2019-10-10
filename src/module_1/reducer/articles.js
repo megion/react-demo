@@ -15,8 +15,7 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     case DELETE_ARTICLE:
       /*
-       * state is immutable map so state.delete return new map and
-       * state did not change
+       * immutable delete article from state (immutable map)
        */
       return state.delete(action.payload.article.id)
 
@@ -36,6 +35,10 @@ export default (state = defaultState, action) => {
 
       /*
        * immutable update inner object (comments)
+       *
+       * comments is not immutable array but 
+       * comments.concat(randomId) - return new array so it work right (we
+       * don't modified current comments array)
        */
       return state.updateIn([article.id, "comments"], comments =>
         comments.concat(randomId)
