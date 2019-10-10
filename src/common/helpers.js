@@ -1,3 +1,5 @@
+import { Map } from "immutable"
+
 /*
  * convert array to map.
  * each elemenet of array should have uniequ id field
@@ -7,6 +9,16 @@ const arrToMap = arr => {
     acc[item.id] = item
     return acc
   }, {})
+  return map
+}
+
+/*
+ * create immutable map contains Record (see immutable-js)
+ */
+const arrToImmutableMap = (arr, ModelRecord) => {
+  const map = arr.reduce((acc, item) => {
+    return acc.set(item.id, ModelRecord(item))
+  }, new Map({}))
   return map
 }
 
@@ -21,18 +33,28 @@ const mapToArr = map => {
   return arr
 }
 
+const immutableMapToArr = map => {
+  return map.valueSeq().toArray()
+}
+
 /*
  * filrate map
  */
 const filterMap = (map, func) => {
-  let nm = {} 
+  let nm = {}
   for (let k in map) {
     const v = map[k]
-    if(func(k, v)) {
+    if (func(k, v)) {
       nm[k] = v
     }
   }
-  return nm 
+  return nm
 }
 
-export default {arrToMap, mapToArr, filterMap}
+export default {
+  arrToMap,
+  arrToImmutableMap,
+  mapToArr,
+  immutableMapToArr,
+  filterMap,
+}

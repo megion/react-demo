@@ -171,10 +171,10 @@ module.exports = {
   devServer: {
     port: 9000,
     proxy: [
-      // add proxy for simple_api
+      // add proxy for simple_api (see simple_api/server.js)
       {
         path: "/api/",
-        target: "http://localhost:3000",
+        target: "http://localhost:3004",
       },
     ],
     //hot: true

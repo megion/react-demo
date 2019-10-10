@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import Article from "../Article"
 import { filtrateArticlesSelector } from "../../selectors/articles"
+import { loadAllArticles } from "../../AC"
 import "./index.less"
 import common from "common" // common library
 
@@ -19,12 +20,16 @@ class ArticleList extends Component {
     super(props)
   }
 
+  componentDidMount() {
+    this.props.loadAllArticles()
+  }
+
   render() {
     const { articles, openItemId, toggleOpenItem } = this.props
     console.log("render articles", articles)
 
     const articleElements = common.helpers
-      .mapToArr(articles)
+      .immutableMapToArr(articles)
       .map((article, index) => {
         return (
           <li className="article-list__li" key={article.id}>
@@ -46,6 +51,6 @@ export default connect(
     return {
       articles: filtrateArticlesSelector(state),
     }
-  }
-  //{ deleteArticle } // map reducer function to props
+  },
+  { loadAllArticles } // map reducer function to props
 )(common.accordion(ArticleList))
