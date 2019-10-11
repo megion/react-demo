@@ -1,4 +1,4 @@
-import { Map } from "immutable"
+import { OrderedMap } from "immutable"
 
 /*
  * convert array to map.
@@ -18,7 +18,7 @@ const arrToMap = arr => {
 const arrToImmutableMap = (arr, ModelRecord) => {
   const map = arr.reduce((acc, item) => {
     return acc.set(item.id, ModelRecord(item))
-  }, new Map({}))
+  }, new OrderedMap({}))
   return map
 }
 

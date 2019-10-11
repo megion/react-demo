@@ -2,7 +2,7 @@ import _ from "lodash"
 import common from "common" // common library
 import { createSelector } from "reselect"
 
-const articlesSelector = state => state.articles
+const articlesSelector = state => state.articles.entities
 const filtersSelector = state => state.filters
 
 export const filtrateArticlesSelector = createSelector(

@@ -80,7 +80,7 @@ class UserForm extends Component {
 export default connect(
   state => {
     return {
-      articles: common.helpers.immutableMapToArr(state.articles),
+      articles: common.helpers.immutableMapToArr(state.articles.entities),
       selectedArticles: state.filters.selectedArticles,
     }
   },

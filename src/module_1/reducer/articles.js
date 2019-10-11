@@ -1,6 +1,13 @@
-import { DELETE_ARTICLE, ADD_COMMENT, LOAD_ALL_ARTICLES } from "../AC/constants"
+import {
+  DELETE_ARTICLE,
+  ADD_COMMENT,
+  LOAD_ALL_ARTICLES,
+  START,
+  SUCCESS,
+  FAIL,
+} from "../AC/constants"
 import common from "common" // common library
-import { Map, Record } from "immutable"
+import { Map, Record, OrderedMap } from "immutable"
 
 const ArticleRecord = Record({
   text: undefined,
@@ -9,7 +16,13 @@ const ArticleRecord = Record({
   comments: [],
 })
 
-const defaultState = new Map({})
+const StateRecord = Record({
+  loading: false,
+  loaded: false,
+  entities: new OrderedMap({}),
+})
+
+const defaultState = StateRecord()
 
 export default (state = defaultState, action) => {
   switch (action.type) {
@@ -17,7 +30,7 @@ export default (state = defaultState, action) => {
       /*
        * immutable delete article from state (immutable map)
        */
-      return state.delete(action.payload.article.id)
+      return state.deleteIn("entities", action.payload.article.id)
 
     case ADD_COMMENT:
       const article = action.payload.article
@@ -36,19 +49,28 @@ export default (state = defaultState, action) => {
       /*
        * immutable update inner object (comments)
        *
-       * comments is not immutable array but 
+       * comments is not immutable array but
        * comments.concat(randomId) - return new array so it work right (we
        * don't modified current comments array)
        */
-      return state.updateIn([article.id, "comments"], comments =>
+      return state.updateIn(["entities", article.id, "comments"], comments =>
         comments.concat(randomId)
       )
 
-    case LOAD_ALL_ARTICLES:
+    case LOAD_ALL_ARTICLES + START:
+      return state.set("loading", true)
+
+    case LOAD_ALL_ARTICLES + SUCCESS:
       /*
        * return array of all articles
        */
-      return common.helpers.arrToImmutableMap(action.response, ArticleRecord)
+      return state
+        .set(
+          "entities",
+          common.helpers.arrToImmutableMap(action.response, ArticleRecord)
+        )
+        .set("loading", false)
+        .set("loaded", true)
 
     default:
       return state
