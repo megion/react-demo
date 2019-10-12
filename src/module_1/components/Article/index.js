@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from "react"
 import { connect } from "react-redux"
-import { deleteArticle } from "../../AC"
+import { deleteArticle, loadArticle } from "../../AC"
 import PropTypes from "prop-types"
 import CommentList from "../CommentList"
 import common from "common" // common library
@@ -31,10 +31,7 @@ class Article extends PureComponent {
     return (
       <section>
         {article.text}
-        <CommentList
-          article={article}
-          ref={this.setComponentListRef}
-        />
+        <CommentList article={article} ref={this.setComponentListRef} />
       </section>
     )
   }
@@ -72,6 +69,18 @@ class Article extends PureComponent {
         </CSSTransition>
       </div>
     )
+  }
+
+  /*
+   * call when parent component rebuilding children because parent state was
+   * changed
+   */
+  componentWillReceiveProps(nextProps) {
+    const { isOpen, article, loadArticle } = nextProps
+    console.log("article receive props:", article, isOpen);
+    if (isOpen && !article.loading && !article.loaded) {
+      loadArticle(article)
+    }
   }
 
   handleDelete = () => {
@@ -124,17 +133,6 @@ class Article extends PureComponent {
   }
 
   /*
-   * call when parent component rebuilding children because parent state was
-   * changed
-   */
-  componentWillReceiveProps(nextProps) {
-    //console.log('Article will receive props: ', nextProps);
-    //if (nextProps.defaultOpen !== this.props.defaultOpen) {
-    //this.setState({isOpen: nextProps.defaultOpen});
-    //}
-  }
-
-  /*
    * manual control updating.
    * This method is overrided in PureComponent
    * wich compare nextProps and nextState with this.props and this.state
@@ -184,5 +182,5 @@ class Article extends PureComponent {
 
 export default connect(
   null, // not need get data from store
-  { deleteArticle } // map reducer function to props
+  { deleteArticle, loadArticle } // map reducer function to props
 )(common.toggleOpen(Article))

@@ -4,6 +4,10 @@ import {
   CHANGE_ARTICLE_SELECTION,
   LOAD_ALL_ARTICLES,
   ADD_COMMENT,
+  LOAD_ARTICLE,
+  START,
+  SUCCESS,
+  FAIL,
 } from "./constants"
 
 /*
@@ -41,6 +45,34 @@ export function addComment(comment, article) {
 export function loadAllArticles() {
   return {
     type: LOAD_ALL_ARTICLES,
-    callAPI: '/api/article',
+    callAPI: "/api/article",
+  }
+}
+
+/*
+ * load article by ID. Use dispatch function (see redux-thunk) frum 'thunk'
+ * middleware
+ */
+export function loadArticle(article) {
+  return dispatch => {
+    dispatch({
+      type: LOAD_ARTICLE + START,
+      payload: { article },
+    })
+
+    setTimeout(function() {
+      fetch(`/api/article/${article.id}`)
+        .then(res => res.json())
+        .then(response =>
+          dispatch({
+            type: LOAD_ARTICLE + SUCCESS,
+            payload: { article, response },
+          })
+        )
+        .catch(error => dispatch({
+            type: LOAD_ARTICLE + FAIL,
+            payload: { article, error },
+          }))
+    }, 2000)
   }
 }

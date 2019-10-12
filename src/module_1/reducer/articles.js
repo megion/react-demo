@@ -2,6 +2,7 @@ import {
   DELETE_ARTICLE,
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
+  LOAD_ARTICLE,
   START,
   SUCCESS,
   FAIL,
@@ -14,6 +15,8 @@ const ArticleRecord = Record({
   title: undefined,
   id: undefined,
   comments: [],
+  loading: false,
+  loaded: false,
 })
 
 const StateRecord = Record({
@@ -25,15 +28,17 @@ const StateRecord = Record({
 const defaultState = StateRecord()
 
 export default (state = defaultState, action) => {
+  const { payload } = action
+
   switch (action.type) {
     case DELETE_ARTICLE:
       /*
        * immutable delete article from state (immutable map)
        */
-      return state.deleteIn("entities", action.payload.article.id)
+      return state.deleteIn("entities", payload.article.id)
 
     case ADD_COMMENT:
-      const article = action.payload.article
+      const article = payload.article
       /*
        * return new copy of articles map and replace target article
        * with new comments array
@@ -71,6 +76,21 @@ export default (state = defaultState, action) => {
         )
         .set("loading", false)
         .set("loaded", true)
+
+    case LOAD_ARTICLE + START:
+      console.log("art", art)
+      return state.setIn(["entities", payload.article.id, "loading"], true)
+
+    case LOAD_ARTICLE + SUCCESS:
+      const art = { ...action.response, loading: false, loaded: true }
+      console.log("art", art)
+      /*
+       * return array of all articles
+       */
+      return state.setIn(
+        ["entities", payload.article.id],
+        ArticleRecord({ ...action.response, loading: false, loaded: true })
+      )
 
     default:
       return state
