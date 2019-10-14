@@ -54,6 +54,7 @@ export function loadAllArticles() {
  * middleware
  */
 export function loadArticle(article) {
+  console.log("start loadArticle:", article)
   return dispatch => {
     dispatch({
       type: LOAD_ARTICLE + START,
@@ -63,16 +64,20 @@ export function loadArticle(article) {
     setTimeout(function() {
       fetch(`/api/article/${article.id}`)
         .then(res => res.json())
-        .then(response =>
+        .then(response => {
+          const res = { article, response }
+          console.log("dispatch loadArticle result:", res)
           dispatch({
             type: LOAD_ARTICLE + SUCCESS,
             payload: { article, response },
           })
-        )
-        .catch(error => dispatch({
+        })
+        .catch(error =>
+          dispatch({
             type: LOAD_ARTICLE + FAIL,
             payload: { article, error },
-          }))
+          })
+        )
     }, 2000)
   }
 }

@@ -10,8 +10,8 @@ export const filtrateArticlesSelector = createSelector(
   filtersSelector,
   (articles, filters) => {
     const selectedArticles = filters.selectedArticles
-    console.log("filtrateArticles, articles: ", articles)
-    console.log("filtrateArticles, filters: ", filters)
+    //console.log("filtrateArticles, articles: ", articles)
+    //console.log("filtrateArticles, filters: ", filters)
     /*
      * filter articles here using selectedArticles
      */

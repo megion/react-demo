@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { deleteArticle, loadArticle } from "../../AC"
 import PropTypes from "prop-types"
 import CommentList from "../CommentList"
+import Loader from "../Loader"
 import common from "common" // common library
 
 import { CSSTransition } from "react-transition-group"
@@ -25,9 +26,9 @@ class Article extends PureComponent {
 
   getBody() {
     const { article, isOpen } = this.props
-    //if (!isOpen) {
-    //return null;
-    //}
+    if (article.loading) {
+      return <Loader />
+    }
     return (
       <section>
         {article.text}
@@ -77,7 +78,7 @@ class Article extends PureComponent {
    */
   componentWillReceiveProps(nextProps) {
     const { isOpen, article, loadArticle } = nextProps
-    console.log("article receive props:", article, isOpen);
+    //console.log("article receive props:", article, isOpen);
     if (isOpen && !article.loading && !article.loaded) {
       loadArticle(article)
     }

@@ -3,7 +3,7 @@
  * function curring
  */
 export default store => next => action => {
-  console.log("logger state before:", store.getState())
+  //console.log("logger state before:", store.getState())
   next(action)
-  console.log("logger state after:", store.getState())
+  //console.log("logger state after:", store.getState())
 }

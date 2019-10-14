@@ -78,18 +78,16 @@ export default (state = defaultState, action) => {
         .set("loaded", true)
 
     case LOAD_ARTICLE + START:
-      console.log("art", art)
       return state.setIn(["entities", payload.article.id, "loading"], true)
 
     case LOAD_ARTICLE + SUCCESS:
-      const art = { ...action.response, loading: false, loaded: true }
-      console.log("art", art)
+      const art = { ...payload.response, loading: false, loaded: true }
       /*
        * return array of all articles
        */
       return state.setIn(
         ["entities", payload.article.id],
-        ArticleRecord({ ...action.response, loading: false, loaded: true })
+        ArticleRecord(art)
       )
 
     default:
