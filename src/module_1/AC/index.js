@@ -54,7 +54,6 @@ export function loadAllArticles() {
  * middleware
  */
 export function loadArticle(article) {
-  console.log("start loadArticle:", article)
   return dispatch => {
     dispatch({
       type: LOAD_ARTICLE + START,
@@ -76,6 +75,35 @@ export function loadArticle(article) {
           dispatch({
             type: LOAD_ARTICLE + FAIL,
             payload: { article, error },
+          })
+        )
+    }, 2000)
+  }
+}
+
+/*
+ * load article by ID. Use dispatch function (see redux-thunk) frum 'thunk'
+ * middleware
+ */
+export function loadAllComments() {
+  return dispatch => {
+    dispatch({
+      type: LOAD_ALL_COMMENTS + START,
+    })
+
+    setTimeout(function() {
+      fetch("/api/comment/")
+        .then(res => res.json())
+        .then(response => {
+          dispatch({
+            type: LOAD_ALL_COMMENTS + SUCCESS,
+            payload: { response },
+          })
+        })
+        .catch(error =>
+          dispatch({
+            type: LOAD_ALL_COMMENTS + FAIL,
+            payload: { error },
           })
         )
     }, 2000)
