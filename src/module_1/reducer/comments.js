@@ -1,19 +1,20 @@
 import {
   ADD_COMMENT,
   LOAD_ALL_COMMENTS,
+  LOAD_ARTICLE_COMMENTS,
   START,
   SUCCESS,
   FAIL,
 } from "../AC/constants"
-import { Map, Record } from "immutable"
+import { Map, Record, OrderedMap } from "immutable"
 import common from "common" // common library
 
 const CommentRecord = Record({
   text: undefined,
   user: undefined,
   id: undefined,
-  loading: false,
-  loaded: false,
+  //loading: false,
+  //loaded: false,
 })
 
 const StateRecord = Record({
@@ -25,6 +26,8 @@ const StateRecord = Record({
 const defaultState = StateRecord()
 
 export default (state = defaultState, action) => {
+  const { payload } = action
+
   switch (action.type) {
     case ADD_COMMENT:
       return state.setIn(
@@ -47,10 +50,18 @@ export default (state = defaultState, action) => {
       return state
         .set(
           "entities",
-          common.helpers.arrToImmutableMap(action.response, CommentRecord)
+          common.helpers.arrToImmutableMap(payload.response, CommentRecord)
         )
         .set("loading", false)
         .set("loaded", true)
+
+    case LOAD_ARTICLE_COMMENTS + SUCCESS:
+      return state
+        .update("entities", entities => {
+          return entities.merge(
+            common.helpers.arrToImmutableMap(payload.response, CommentRecord)
+          )
+        })
 
     default:
       return state

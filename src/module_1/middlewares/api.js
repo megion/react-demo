@@ -15,6 +15,7 @@ export default store => next => action => {
     // do request
     fetch(callAPI)
       .then(res => res.json())
+    // FIXME: put response to action.payload
       .then(response => next({ ...rest, type: type + SUCCESS, response }))
       .catch(error => next({ ...rest, type: type + FAIL, error }))
   }, 2000)

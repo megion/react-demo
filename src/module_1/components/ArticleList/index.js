@@ -22,14 +22,13 @@ class ArticleList extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.loaded || !this.props.loading) {
+    if (!this.props.loaded && !this.props.loading) {
       this.props.loadAllArticles()
     }
   }
 
   render() {
     const { articles, openItemId, toggleOpenItem } = this.props
-    console.log("render articles", articles)
 
     if(this.props.loading) {
       return <Loader/>

@@ -9,6 +9,7 @@ import common from "common" // common library
 import { CSSTransition } from "react-transition-group"
 import "./index.less"
 
+
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
@@ -29,10 +30,11 @@ class Article extends PureComponent {
     if (article.loading) {
       return <Loader />
     }
+    //ref={this.setComponentListRef}
     return (
       <section>
         {article.text}
-        <CommentList article={article} ref={this.setComponentListRef} />
+        <CommentList article={article} />
       </section>
     )
   }

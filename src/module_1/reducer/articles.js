@@ -3,6 +3,7 @@ import {
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
   LOAD_ARTICLE,
+  LOAD_ARTICLE_COMMENTS,
   START,
   SUCCESS,
   FAIL,
@@ -17,6 +18,8 @@ const ArticleRecord = Record({
   comments: [],
   loading: false,
   loaded: false,
+  commentsLoading: false,
+  commentsLoaded: false,
 })
 
 const StateRecord = Record({
@@ -39,18 +42,6 @@ export default (state = defaultState, action) => {
 
     case ADD_COMMENT:
       const article = payload.article
-      /*
-       * return new copy of articles map and replace target article
-       * with new comments array
-       */
-      //return {
-      //...state,
-      //[article.id]: {
-      //...article,
-      //comments: (article.comments || []).concat(action.randomId),
-      //},
-      //}
-
       /*
        * immutable update inner object (comments)
        *
@@ -85,10 +76,17 @@ export default (state = defaultState, action) => {
       /*
        * return array of all articles
        */
-      return state.setIn(
-        ["entities", payload.article.id],
-        ArticleRecord(art)
-      )
+      return state.setIn(["entities", payload.article.id], ArticleRecord(art))
+
+    case LOAD_ARTICLE_COMMENTS + SUCCESS:
+      return state.updateIn(["entities", payload.article.id], article => {
+        return article.set("commentsLoaded", true).set("commentsLoading", false)
+      })
+
+    case LOAD_ARTICLE_COMMENTS + START:
+      return state.updateIn(["entities", payload.article.id], article => {
+        return article.set("commentsLoaded", false).set("commentsLoading", true)
+      })
 
     default:
       return state

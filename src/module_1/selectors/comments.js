@@ -3,7 +3,9 @@
  */
 import { createSelector } from "reselect"
 
-const commentsSelector = state => state.comments
+const commentsSelector = state => {
+  return state.comments.entities
+}
 const idSelector = (state, props) => props.id
 
 /*
@@ -15,10 +17,7 @@ export const commentByIdSelectorFactory = () => {
     commentsSelector,
     idSelector,
     (comments, id) => {
-      console.log("commentByIdSelector", id)
-      //const comment = comments.find(comment => comment.id === id)
-      const comment = comments[id]
-      return comment
+      return comments.get(id)
     }
   )
 }
