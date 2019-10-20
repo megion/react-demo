@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import ArticleList from "./components/ArticleList"
 import UserForm from "./components/UserForm"
 import Counter from "./components/Counter"
+import Article from "./components/Article"
 import logo from "./logo.svg"
 import "./App.less"
 import "bootstrap/dist/css/bootstrap.css"
@@ -83,6 +84,15 @@ class App extends Component {
               <div>
                 <p>Article list:</p>
                 <ArticleList />
+              </div>
+            </Route>
+
+            <Route path="/articles/:id">
+              let {id} = useParams();
+              <div>
+                <p>Article list:</p>
+                <ArticleList />
+                <Article />
               </div>
             </Route>
           </Switch>

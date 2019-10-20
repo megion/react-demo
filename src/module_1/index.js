@@ -23,4 +23,7 @@ function loadModuleApp() {
   //});
 }
 
+// TODO: call on init (it temporary)
+loadModuleApp()
+
 export {loadModuleApp};
