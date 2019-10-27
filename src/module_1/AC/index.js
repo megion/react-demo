@@ -5,7 +5,7 @@ import {
   LOAD_ALL_ARTICLES,
   ADD_COMMENT,
   LOAD_ARTICLE,
-  LOAD_ALL_COMMENTS,
+  LOAD_COMMENTS_FOR_PAGE,
   LOAD_ARTICLE_COMMENTS,
   START,
   SUCCESS,
@@ -55,28 +55,26 @@ export function loadAllArticles() {
  * load article by ID. Use dispatch function (see redux-thunk) frum 'thunk'
  * middleware
  */
-export function loadArticle(article) {
+export function loadArticle(articleId) {
   return dispatch => {
     dispatch({
       type: LOAD_ARTICLE + START,
-      payload: { article },
+      payload: { articleId },
     })
 
     setTimeout(function() {
-      fetch(`/api/article/${article.id}`)
+      fetch(`/api/article/${articleId}`)
         .then(res => res.json())
         .then(response => {
-          const res = { article, response }
-          console.log("dispatch loadArticle result:", res)
           dispatch({
             type: LOAD_ARTICLE + SUCCESS,
-            payload: { article, response },
+            payload: { articleId, response },
           })
         })
         .catch(error =>
           dispatch({
             type: LOAD_ARTICLE + FAIL,
-            payload: { article, error },
+            payload: { articleId, error },
           })
         )
     }, 2000)
@@ -86,10 +84,10 @@ export function loadArticle(article) {
 /*
  * load all comments.
  */
-export function loadAllComments() {
+export function loadComments() {
   return dispatch => {
     dispatch({
-      type: LOAD_ALL_COMMENTS + START,
+      type: LOAD_COMMENTS_FOR_PAGE + START,
     })
 
     setTimeout(function() {
@@ -97,13 +95,13 @@ export function loadAllComments() {
         .then(res => res.json())
         .then(response => {
           dispatch({
-            type: LOAD_ALL_COMMENTS + SUCCESS,
+            type: LOAD_COMMENTS_FOR_PAGE + SUCCESS,
             payload: { response },
           })
         })
         .catch(error =>
           dispatch({
-            type: LOAD_ALL_COMMENTS + FAIL,
+            type: LOAD_COMMENTS_FOR_PAGE + FAIL,
             payload: { error },
           })
         )
@@ -116,6 +114,10 @@ export function loadAllComments() {
  */
 export function loadArticleComments(article) {
   return dispatch => {
+    if (!article.commentsLoading && !article.commentsLoaded) {
+      return
+    }
+
     dispatch({
       type: LOAD_ARTICLE_COMMENTS + START,
       payload: { article },

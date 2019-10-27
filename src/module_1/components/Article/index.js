@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from "react"
 import { connect } from "react-redux"
-import { deleteArticle, loadArticle } from "../../AC"
+import { deleteArticle } from "../../AC"
 import PropTypes from "prop-types"
 import CommentList from "../CommentList"
 import Loader from "../Loader"
@@ -9,8 +9,7 @@ import common from "common" // common library
 import { CSSTransition } from "react-transition-group"
 import "./index.less"
 
-
-class Article extends PureComponent {
+class Article extends Component {
   static propTypes = {
     article: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -27,10 +26,6 @@ class Article extends PureComponent {
 
   getBody() {
     const { article, isOpen } = this.props
-    if (article.loading) {
-      return <Loader />
-    }
-    //ref={this.setComponentListRef}
     return (
       <section>
         {article.text}
@@ -60,7 +55,9 @@ class Article extends PureComponent {
       <div className="article" ref={processNode}>
         <p>{article.title}</p>
         <button onClick={toggleOpen}>{isOpen ? "Close" : "Open"}</button>
-        <button onClick={this.handleDelete}>Delete me</button>
+        <button onClick={this.handleDelete}>
+          <common.LocalizedText>delete me</common.LocalizedText>
+        </button>
 
         <CSSTransition
           in={isOpen}
@@ -79,20 +76,11 @@ class Article extends PureComponent {
    * changed
    */
   componentWillReceiveProps(nextProps) {
-    const { isOpen, article, loadArticle } = nextProps
-    //console.log("article receive props:", article, isOpen);
-    if (isOpen && !article.loading && !article.loaded) {
-      loadArticle(article)
-    }
   }
 
   handleDelete = () => {
     console.log("delete article")
     this.props.deleteArticle(this.props.article)
-  }
-
-  setComponentListRef = ref => {
-    console.log("setComponentListRef", ref)
   }
 
   /*
@@ -104,36 +92,12 @@ class Article extends PureComponent {
    *   then render will not be wait resolving this promise.
    *   Question: how should we get data before call render?
    */
-  componentWillMount() {
-    //console.log('Article will mount');
-    // TODO: case 1
-    //async function getArticle() {
-    //let p = new Promise(function(resolve, reject) {
-    //setTimeout(() => {
-    //console.log('Article data has been recieved');
-    //resolve('article data');
-    //}, 1000);
-    //});
-    //let result = await p;
-    //console.log(result);
-    //}
-    //getArticle();
-    // TODO: case 2
-    //return new Promise(function(resolve, reject) {
-    //setTimeout(() => {
-    //console.log('Article data has been recieved');
-    //resolve('article data');
-    //}, 1000);
-    //});
-    // TODO: case 3 (use generators)
-  }
+  componentWillMount() {}
 
   /*
    * after build component in DOM
    */
-  componentDidMount() {
-    //console.log('Article was build in DOM');
-  }
+  componentDidMount() {}
 
   /*
    * manual control updating.
@@ -141,49 +105,28 @@ class Article extends PureComponent {
    * wich compare nextProps and nextState with this.props and this.state
    */
   //shouldComponentUpdate(nextProps, nextState) {
-  ////console.log(
-  ////'Article shouldComponentUpdate nextProps:',
-  ////nextProps,
-  ////'nextState:',
-  ////nextState,
-  ////);
-
   //return this.state.isOpen !== nextState.isOpen;
   //}
 
   /*
    * before upate component
    */
-  componentWillUpdate(nextProps, nextState) {
-    //console.log(
-    //'Article componentWillUpdate nextProps:',
-    //nextProps,
-    //'nextState:',
-    //nextState,
-    //);
-  }
+  componentWillUpdate(nextProps, nextState) {}
 
   /*
    * after build DOM
    */
-  componentDidUpdate(prevProps, prevState) {
-    //console.log(
-    //'Article componentDidUpdate prevProps:',
-    //prevProps,
-    //'prevState:',
-    //prevState,
-    //);
-  }
+  componentDidUpdate(prevProps, prevState) {}
 
   /*
    * befor component distroy
    */
-  componentWillUnmount() {
-    //console.log('Article componentWillUnmount');
-  }
+  componentWillUnmount() {}
 }
 
 export default connect(
-  null, // not need get data from store
-  { deleteArticle, loadArticle } // map reducer function to props
+  null,
+  { deleteArticle }, // map reducer function to props
+  null,
+  {pure: false}
 )(common.toggleOpen(Article))

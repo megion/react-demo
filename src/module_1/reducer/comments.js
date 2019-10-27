@@ -1,6 +1,6 @@
 import {
   ADD_COMMENT,
-  LOAD_ALL_COMMENTS,
+  LOAD_COMMENTS_FOR_PAGE,
   LOAD_ARTICLE_COMMENTS,
   START,
   SUCCESS,
@@ -18,9 +18,9 @@ const CommentRecord = Record({
 })
 
 const StateRecord = Record({
-  loading: false,
-  loaded: false,
   entities: new OrderedMap({}),
+  pagination: new Map({}),
+  total: null,
 })
 
 const defaultState = StateRecord()
@@ -40,28 +40,35 @@ export default (state = defaultState, action) => {
     //[action.randomId]: { ...action.payload.comment, id: action.randomId },
     //}
 
-    case LOAD_ALL_COMMENTS + START:
-      return state.set("loading", true)
+    case LOAD_COMMENTS_FOR_PAGE + START:
+      return state.setIn(["pagination", payload.page, "loading"], true)
 
-    case LOAD_ALL_COMMENTS + SUCCESS:
+    case LOAD_COMMENTS_FOR_PAGE + SUCCESS:
       /*
        * return array of all comments
        */
       return state
-        .set(
+        .set("total", payload.response.total)
+        .merge(
           "entities",
-          common.helpers.arrToImmutableMap(payload.response, CommentRecord)
+          common.helpers.arrToImmutableMap(
+            payload.response.records,
+            CommentRecord
+          )
         )
-        .set("loading", false)
-        .set("loaded", true)
+        .setIn(
+          ["pagination", payload.page, "ids"],
+          payload.response.records.map(comment => comment.id)
+        )
+        .setIn(["pagination", payload.page, "loading"], false)
+        .setIn(["pagination", payload.page, "loaded"], true)
 
     case LOAD_ARTICLE_COMMENTS + SUCCESS:
-      return state
-        .update("entities", entities => {
-          return entities.merge(
-            common.helpers.arrToImmutableMap(payload.response, CommentRecord)
-          )
-        })
+      return state.update("entities", entities => {
+        return entities.merge(
+          common.helpers.arrToImmutableMap(payload.response, CommentRecord)
+        )
+      })
 
     default:
       return state

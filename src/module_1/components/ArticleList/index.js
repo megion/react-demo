@@ -69,5 +69,7 @@ export default connect(
       loaded: state.articles.loaded,
     }
   },
-  { loadAllArticles } // map reducer function to props
+  { loadAllArticles }, // map reducer function to props
+  null,
+  {pure: false}
 )(common.accordion(ArticleList))

@@ -71,7 +71,7 @@ class CommentList extends Component {
    */
   componentWillReceiveProps(nextProps) {
     const { isOpen, article, loadArticleComments } = nextProps
-    if (isOpen && !article.commentsLoading && !article.commentsLoaded) {
+    if (isOpen) {
       loadArticleComments(article)
     }
   }
