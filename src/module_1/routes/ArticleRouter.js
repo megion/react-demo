@@ -9,7 +9,7 @@ class ArticleRouter extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     // from connect
-    article: PropTypes.object
+    article: PropTypes.object,
   }
 
   constructor(props) {
@@ -44,5 +44,5 @@ export default connect(
   },
   { loadArticle }, // map reducer function to props
   null,
-  {pure: false}
+  { pure: false }
 )(ArticleRouter)

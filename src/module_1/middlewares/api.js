@@ -18,5 +18,5 @@ export default store => next => action => {
     // FIXME: put response to action.payload
       .then(response => next({ ...rest, type: type + SUCCESS, response }))
       .catch(error => next({ ...rest, type: type + FAIL, error }))
-  }, 2000)
+  }, 4000)
 }

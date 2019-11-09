@@ -60,16 +60,34 @@ export default (state = defaultState, action) => {
       /*
        * return array of all articles
        */
-      return state
-        .set(
-          "entities",
-          common.helpers.arrToImmutableMap(action.response, ArticleRecord)
-        )
-        .set("loading", false)
-        .set("loaded", true)
+      return (
+        state
+          // TODO use update because if use set it will rewrite article loaded by
+          // LOAD_ARTICLE action
+          .update("entities", entities => {
+            return common.helpers
+              .arrToImmutableMap(action.response, ArticleRecord)
+              .merge(entities)
+          })
+          //.set(
+          //"entities",
+          //common.helpers.arrToImmutableMap(action.response, ArticleRecord)
+          //)
+          .set("loading", false)
+          .set("loaded", true)
+      )
 
     case LOAD_ARTICLE + START:
-      return state.setIn(["entities", payload.articleId, "loading"], true)
+      return state.updateIn(["entities", payload.articleId], article => {
+        if (article) {
+          return article.set("loaded", false).set("loading", true)
+        }
+        return ArticleRecord({
+          loading: true,
+          loaded: false,
+          id: payload.articleId,
+        })
+      })
 
     case LOAD_ARTICLE + SUCCESS:
       const art = { ...payload.response, loading: false, loaded: true }
