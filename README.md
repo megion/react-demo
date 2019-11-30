@@ -1,5 +1,9 @@
 # React demo application
 
+## Run tests
+
+    $ npm t 
+
 ## Build for development
 
     $ npm run dev 

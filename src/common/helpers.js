@@ -51,10 +51,15 @@ const filterMap = (map, func) => {
   return nm
 }
 
+const sum = (a, b) => {
+  return a+b
+}
+
 export default {
   arrToMap,
   arrToImmutableMap,
   mapToArr,
   immutableMapToArr,
   filterMap,
+  sum
 }
