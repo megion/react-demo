@@ -96,6 +96,11 @@ module.exports = {
         },
         // options for the loader
       },
+      //{
+        //test: /\.js$/,
+        //use: ["source-map-loader"],
+        //enforce: "pre",
+      //},
       {
         test: /\.css$/,
         // Adds CSS to the DOM by injecting a <style> tag
