@@ -71,28 +71,9 @@ class Article extends Component {
     )
   }
 
-  /*
-   * call when parent component rebuilding children because parent state was
-   * changed
-   */
-  componentWillReceiveProps(nextProps) {
-  }
-
   handleDelete = () => {
-    console.log("delete article")
     this.props.deleteArticle(this.props.article)
   }
-
-  /*
-   *
-   * override it for:
-   * - get some component data from server
-   *   TODO: if function return promise ->
-   *   'return new Promise(function(resolve, reject)'
-   *   then render will not be wait resolving this promise.
-   *   Question: how should we get data before call render?
-   */
-  componentWillMount() {}
 
   /*
    * after build component in DOM
@@ -107,11 +88,6 @@ class Article extends Component {
   //shouldComponentUpdate(nextProps, nextState) {
   //return this.state.isOpen !== nextState.isOpen;
   //}
-
-  /*
-   * before upate component
-   */
-  componentWillUpdate(nextProps, nextState) {}
 
   /*
    * after build DOM

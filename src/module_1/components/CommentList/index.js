@@ -65,12 +65,8 @@ class CommentList extends Component {
     )
   }
 
-  /*
-   * call when parent component rebuilding children because parent state was
-   * changed
-   */
-  componentWillReceiveProps(nextProps) {
-    const { isOpen, article, loadArticleComments } = nextProps
+  componentDidMount() {
+    const { isOpen, article, loadArticleComments } = this.props
     if (isOpen) {
       loadArticleComments(article)
     }

@@ -2,15 +2,11 @@ import React, { Component } from "react"
 import ArticleList from "./components/ArticleList"
 import UserForm from "./components/UserForm"
 import Counter from "./components/Counter"
-import Article from "./components/Article"
-import ArticleRouter from "./routes/ArticleRouter"
+import ArticlePage from "./routes/ArticlePage"
 import logo from "./logo.svg"
 import "./App.less"
 import "bootstrap/dist/css/bootstrap.css"
-import store from "./store"
 import common from "common" // common library
-
-import { useParams } from "react-router"
 
 import {
   HashRouter as Router,
@@ -18,6 +14,7 @@ import {
   Route,
   Link,
   NavLink,
+  useParams,
 } from "react-router-dom"
 
 class App extends Component {
@@ -92,15 +89,16 @@ class App extends Component {
 
               <Route path="/counter" render={this.getCounter}></Route>
 
-              {/*
-            <Route path="/articles">
-              <div>
-                <p>Article list:</p>
-                <ArticleList />
-              </div>
-            </Route>
-        */}
-              <Route exact path="/articles/:id" render={this.getArticle} />
+              <Route path="/articles">
+                <div>
+                  <p>Article list:</p>
+                  <ArticleList />
+                </div>
+              </Route>
+
+              <Route path="/article/:id">
+                <ArticlePage />
+              </Route>
               <Route
                 exact
                 path="/comments/:page"
@@ -124,22 +122,6 @@ class App extends Component {
     this.setState({ language })
   }
 
-  getArticle = ({ match }) => {
-    //let { id } = useParams()
-    //
-    let { id } = match.params
-    return (
-      <div>
-        <p>Article list:</p>
-        <ArticleList />
-        {/*
-        use key for full remount component when id changed
-        */}
-        <ArticleRouter id={id} key={id} />
-      </div>
-    )
-  }
-
   getCounter = ({ match }) => {
     return <Counter />
   }
@@ -152,5 +134,6 @@ class App extends Component {
     return <div>Comments for page</div>
   }
 }
+
 
 export default App

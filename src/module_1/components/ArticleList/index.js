@@ -41,7 +41,7 @@ class ArticleList extends Component {
         return (
           <li className="article-list__li" key={article.id}>
             <NavLink
-              to={`/articles/${article.id}`}
+              to={`/article/${article.id}`}
               activeClassName="app-link_active"
             >
               {article.title}
