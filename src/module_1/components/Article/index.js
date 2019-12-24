@@ -75,8 +75,7 @@ class Article extends Component {
    * call when parent component rebuilding children because parent state was
    * changed
    */
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
 
   handleDelete = () => {
     console.log("delete article")
@@ -128,5 +127,5 @@ export default connect(
   null,
   { deleteArticle }, // map reducer function to props
   null,
-  {pure: false}
+  { pure: false }
 )(common.toggleOpen(Article))
