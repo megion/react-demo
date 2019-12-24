@@ -2,6 +2,6 @@ import toggleOpen from "./decorators/toggleOpen"
 import accordion from "./decorators/accordion"
 import helpers from "./helpers"
 import LangProvider from "./lang/LangProvider"
-import LocalizedText from "./lang/LocalizedText"
+import lang from "./lang"
 
-export default { toggleOpen, accordion, helpers, LocalizedText, LangProvider }
+export default { toggleOpen, accordion, helpers, lang, LangProvider }
