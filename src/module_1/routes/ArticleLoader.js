@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import Loader from "../components/Loader"
 import Article from "../components/Article"
 
-class ArticleRouter extends Component {
+class ArticleLoader extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     // from connect
@@ -28,8 +28,8 @@ class ArticleRouter extends Component {
    * call when parent component rebuilding children because parent state was
    * changed
    */
-  componentWillReceiveProps(nextProps) {
-    const { article } = nextProps
+  componentDidMount() {
+    const { article } = this.props
     if (!article || (!article.loading && !article.loaded)) {
       this.props.loadArticle(this.props.id)
     }
@@ -45,4 +45,4 @@ export default connect(
   { loadArticle }, // map reducer function to props
   null,
   { pure: false }
-)(ArticleRouter)
+)(ArticleLoader)
