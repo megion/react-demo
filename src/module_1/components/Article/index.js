@@ -47,17 +47,13 @@ class Article extends Component {
     /*
      * onCloseClick - for change parent state (reverse data flow)
      */
-    const { article, isOpen, onCloseClick, toggleOpen } = this.props
+    const { article, isOpen, onCloseClick, toggleOpen, translate } = this.props
 
-    // <button onClick={onCloseClick}>{isOpen ? 'Close' : 'Open'}</button>
-    //
     return (
       <div className="article" ref={processNode}>
         <p>{article.title}</p>
         <button onClick={toggleOpen}>{isOpen ? "Close" : "Open"}</button>
-        <button onClick={this.handleDelete}>
-          <common.LocalizedText>delete me</common.LocalizedText>
-        </button>
+        <button onClick={this.handleDelete}>{translate("delete me")}</button>
 
         <CSSTransition
           in={isOpen}
@@ -104,5 +100,5 @@ export default connect(
   null,
   { deleteArticle }, // map reducer function to props
   null,
-  {pure: false}
-)(common.toggleOpen(Article))
+  { pure: false }
+)(common.toggleOpen(common.lang(Article)))

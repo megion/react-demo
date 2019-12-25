@@ -1,0 +1,21 @@
+import React, { Component } from "react"
+import dictionaries from "./dictionaries"
+import { Consumer } from "./context"
+
+export default Component =>
+  class LocalizedText extends Component {
+    render() {
+      return (
+        <Consumer>
+          {dictionary => (
+            <Component
+              {...this.props}
+              translate={this.createTranslate(dictionary)}
+            />
+          )}
+        </Consumer>
+      )
+    }
+
+    createTranslate = dictionary => text => dictionary[text] || text
+  }
