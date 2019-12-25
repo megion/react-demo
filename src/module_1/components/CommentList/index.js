@@ -7,6 +7,7 @@ import "./index.less"
 import CommentForm from "../CommentForm"
 import Loader from "../Loader"
 import common from "common" // common library
+import { Consumer as UserConsumer } from "../../context/user"
 
 class CommentList extends Component {
   static propTypes = {
@@ -31,6 +32,7 @@ class CommentList extends Component {
     const text = this.props.isOpen ? "hide comments" : "show comments"
     return (
       <div>
+        <h3>User: <UserConsumer>{(user) => user}</UserConsumer></h3>
         <CommentForm article={this.props.article} />
         <button onClick={this.props.toggleOpen}>{text}</button>
         {this.getBody()}
