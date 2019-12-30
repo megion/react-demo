@@ -5,6 +5,9 @@ import { Consumer } from "./context"
 export default Component =>
   class LocalizedText extends Component {
     render() {
+      /**
+       * use render props pattern
+      */
       return (
         <Consumer>
           {dictionary => (
