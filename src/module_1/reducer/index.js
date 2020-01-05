@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import { reducer as formReducer } from "redux-form"
 import counterReducer from "./counter"
 import articles from "./articles"
 import filters from "./filters"
@@ -9,4 +10,8 @@ export default combineReducers({
   articles,
   filters,
   comments,
+  // ...your other reducers here
+  // you have to pass formReducer under 'form' key,
+  // for custom keys look up the docs for 'getFormState'
+  form: formReducer,
 })

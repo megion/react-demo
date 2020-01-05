@@ -4,9 +4,7 @@ import ArticleList from "../components/ArticleList"
 import { useParams } from "react-router-dom"
 
 export default function ArticlePage() {
-  //let { id } = useParams()
   let { id } = useParams()
-  //let { id } = match.params
   return (
     <div>
       <p>Article list:</p>

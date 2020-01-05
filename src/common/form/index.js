@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import dictionaries from "./dictionaries"
 import { Consumer } from "./context"
 
 export default Component =>
