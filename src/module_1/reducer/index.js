@@ -4,6 +4,7 @@ import counterReducer from "./counter"
 import articles from "./articles"
 import filters from "./filters"
 import comments from "./comments"
+import authReducer, {moduleName as authModule} from "../ducks/auth"
 
 export default combineReducers({
   count: counterReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   // you have to pass formReducer under 'form' key,
   // for custom keys look up the docs for 'getFormState'
   form: formReducer,
+  [authModule]: authReducer
 })

@@ -3,7 +3,8 @@ import ArticleList from "./components/ArticleList"
 import UserForm from "./components/UserForm"
 import Counter from "./components/Counter"
 import ArticlePage from "./routes/ArticlePage"
-import AuthPage from "./routes/AuthPage"
+import SignUpPage from "./routes/SignUpPage"
+import SignInPage from "./routes/SignInPage"
 import logo from "./logo.svg"
 import "./App.less"
 import "bootstrap/dist/css/bootstrap.css"
@@ -65,8 +66,13 @@ class App extends Component {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/auth" activeClassName="app-link_active">
-                    Auth
+                  <NavLink to="/sign-in" activeClassName="app-link_active">
+                    Sign in
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/sign-up" activeClassName="app-link_active">
+                    Sign up
                   </NavLink>
                 </li>
               </ul>
@@ -108,8 +114,12 @@ class App extends Component {
                   <ArticlePage />
                 </Route>
 
-                <Route path="/auth">
-                  <AuthPage />
+                <Route path="/sign-up">
+                  <SignUpPage />
+                </Route>
+
+                <Route path="/sign-in">
+                  <SignInPage />
                 </Route>
 
                 <Route

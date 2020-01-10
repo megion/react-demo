@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Field, reduxForm } from "redux-form"
 import common from "common" // common library
 
-class SignInForm extends Component {
+class SignUpForm extends Component {
   static propTypes = {}
 
   constructor(props) {
@@ -54,6 +54,7 @@ function validate({ email, password }) {
 }
 
 export default reduxForm({
-  form: "signIn",
+  // a unique name for the form
+  form: "singUp",
   validate,
-})(SignInForm)
+})(SignUpForm)
