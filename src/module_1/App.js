@@ -5,6 +5,7 @@ import Counter from "./components/Counter"
 import ArticlePage from "./routes/ArticlePage"
 import SignUpPage from "./routes/SignUpPage"
 import SignInPage from "./routes/SignInPage"
+import ProtectedRoute from "./routes/ProtectedRoute"
 import logo from "./logo.svg"
 import "./App.less"
 import "bootstrap/dist/css/bootstrap.css"
@@ -97,11 +98,13 @@ class App extends Component {
                   </div>
                 </Route>
 
-                <Route exact path="/user-form">
+                <ProtectedRoute path="/user-form">
                   <UserForm />
-                </Route>
+                </ProtectedRoute>
 
-                <Route path="/counter" render={this.getCounter}></Route>
+                <Route path="/counter">
+                  <Counter />
+                </Route>
 
                 <Route path="/articles">
                   <div>
@@ -122,12 +125,13 @@ class App extends Component {
                   <SignInPage />
                 </Route>
 
-                <Route
-                  exact
-                  path="/comments/:page"
-                  render={this.getCommentsForPage}
-                />
-                <Route path="*" render={this.getNotFound} />
+                <Route path="/comments/:page">
+                  <div>Comments for page</div>
+                </Route>
+
+                <Route path="*">
+                  <div>Not Found</div>
+                </Route>
               </Switch>
             </div>
           </common.LangProvider>
@@ -144,18 +148,6 @@ class App extends Component {
 
   changeLanguage = language => ev => {
     this.setState({ language })
-  }
-
-  getCounter = ({ match }) => {
-    return <Counter />
-  }
-
-  getNotFound = () => {
-    return <div>Not Found</div>
-  }
-
-  getCommentsForPage = () => {
-    return <div>Comments for page</div>
   }
 }
 

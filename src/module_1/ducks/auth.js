@@ -79,3 +79,7 @@ export function signIn(email, password) {
     //get("/widget").then(widget => dispatch(updateWidget(widget)))
   }
 }
+
+//firebase.auth().onAuthStateChange(user => {
+  //console.log("--- onAuthStateChange:", user)
+//})
