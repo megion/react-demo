@@ -55,6 +55,10 @@ const sum = (a, b) => {
   return a + b
 }
 
+function generateId() {
+  return (Date.now() + Math.random()).toString()
+}
+
 export default {
   arrToMap,
   arrToImmutableMap,
@@ -62,4 +66,5 @@ export default {
   immutableMapToArr,
   filterMap,
   sum,
+  generateId,
 }

@@ -2,6 +2,8 @@
  * duck widget. See https://github.com/erikras/ducks-modular-redux
  */
 import { List, Record } from "immutable"
+import { put, takeEvery } from "redux-saga/effects"
+import common from "common" // common library
 import { appName } from "../../../app.config"
 
 const StateRecord = Record({
@@ -18,6 +20,7 @@ const PersonRecord = Record({
 export const moduleName = "peoplen"
 const prefix = `${appName}/${moduleName}`
 // Actions
+const ADD_PERSON_REQUEST = `${prefix}/ADD_PERSON_REQUEST`
 const ADD_PERSON = `${prefix}/ADD_PERSON`
 
 // Reducer
@@ -26,7 +29,7 @@ export default function reducer(state = StateRecord(), action = {}) {
   switch (action.type) {
     case ADD_PERSON:
       return state.update("entities", entities => {
-        return entities.push(payload.person)
+        return entities.push(PersonRecord(payload.person))
       })
 
     default:
@@ -34,17 +37,28 @@ export default function reducer(state = StateRecord(), action = {}) {
   }
 }
 
+/**
+ * saga for add person action (generate person ID)
+ */
+function* addPersionSaga(action) {
+  // TODO: for testing the better use 'yield call'
+  const newId = yield call(common.helpers.generateId)
+  // instead of using:
+  //const newId = common.helpers.generateId()
+  yield put({
+    type: ADD_PERSON,
+    payload: { person: { id: newId, ...person } },
+  })
+}
+
 // Action creators
 export function addPerson(person) {
-  /*
-   * TODO: here use dispatch from thunk middleware because this code is not pure
-   * function: 
-   * `id: Date.now()`
-   */
-  return dispatch => {
-    dispatch({
-      type: ADD_PERSON,
-      payload: { person: { id: Date.now(), ...person } },
-    })
+  return {
+    type: ADD_PERSON_REQUEST,
+    payload: { person },
   }
+}
+
+export function* saga() {
+  yield takeEvery(ADD_PERSON_REQUEST, addPersionSaga);
 }
