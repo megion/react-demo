@@ -1,26 +1,10 @@
 const webpack = require("webpack")
-//const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require("path")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
-const path = require("path")
-var argv = require("yargs-parser")(process.argv.slice(2))
-var mode = argv.mode
-const devMode = mode === "development"
-
 module.exports = {
-  mode: mode,
-  watchOptions: {
-    ignored: /node_modules/,
-    aggregateTimeout: 300,
-    /*
-     * If watching does not work for you,
-     * try out this option.
-     * Watching does not work with NFS and machines in VirtualBox.
-     */
-    poll: 1000,
-  },
   context: path.resolve(__dirname, "./src"),
   entry: {
     // create entry point (and lib with name 'module1' from ./module_1/index.js
@@ -50,14 +34,6 @@ module.exports = {
   },
 
   plugins: [
-    //new webpack.DefinePlugin({
-    //'process.env': {
-    //NODE_ENV: devMode
-    //? JSON.stringify('development')
-    //: JSON.stringify('production'),
-    //},
-    //}),
-    //new webpack.ProgressPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -92,7 +68,6 @@ module.exports = {
         loader: "babel-loader",
         options: {
           presets: ["@babel/preset-env"],
-          //"plugins": ["transform-es2015-modules-umd"]
         },
         // options for the loader
       },
@@ -136,7 +111,6 @@ module.exports = {
                 //if (devMode) {
                 //return '[path][name].[ext]';
                 //}
-
                 return "[path][name].[hash].[ext]"
               },
             },
@@ -166,22 +140,5 @@ module.exports = {
     //noParse: function(content) {
     //return /moment|lodash/.test(content);
     //}
-  },
-
-  watch: devMode,
-  devtool: devMode ? "source-map" : false, // enum
-  // enhance debugging by adding meta info for the browser devtools
-  // source-map most detailed at the expense of build speed.
-
-  devServer: {
-    port: 9000,
-    proxy: [
-      // add proxy for simple_api (see simple_api/server.js)
-      {
-        path: "/api/",
-        target: "http://localhost:3004",
-      },
-    ],
-    //hot: true
   },
 }

@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "description": "react demo",
   "scripts": {
-    "start": "concurrently \"npm run dev-server\" \"npm run api\"",
-    "profile": "webpack --mode production --profile --display-modules --display-reasons",
-    "prod": "webpack --mode=production --progress",
-    "dev": "webpack --mode=development --progress",
-    "watch": "webpack --mode=development --watch --progress",
-    "dev-server": "webpack-dev-server --mode=development --progress",
+    "prod": "webpack --progress --config webpack.prod.js",
+    "dev": "webpack --progress --config webpack.dev.js",
     "api": "node simple_api/server.js",
-    "test": "jest --watch"
+    "start": "webpack-dev-server --progress --config webpack.dev.js",
+    "dev-server-and-api": "concurrently \"npm run start\" \"npm run api\"",
+    "test": "jest --watch",
+    "profile": "webpack --profile --display-modules --display-reasons --config webpack.prod.js"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -46,6 +45,7 @@
     "webpack": "^4.37.0",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.2",
     "yargs-parser": "^13.1.1"
   },
   "dependencies": {

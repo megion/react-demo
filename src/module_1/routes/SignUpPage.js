@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import SignUpForm from "../components/Auth/SignUpForm"
 import Loader from "../components/Loader"
-import { signUp, moduleName as authModuleName } from "../ducks/auth"
+import { signUpRequest, moduleName as authModuleName } from "../ducks/auth"
 
 class SingUpPage extends Component {
   static propTypes = {}
@@ -28,7 +28,7 @@ class SingUpPage extends Component {
   }
 
   handleSignUp = ({ email, password }) => {
-    this.props.signUp(email, password)
+    this.props.signUpRequest(email, password)
   }
 }
 
@@ -36,5 +36,5 @@ export default connect(
   state => {
     return { auth: state[authModuleName] }
   },
-  { signUp } // map reducer function to props
+  { signUpRequest } // map reducer function to props
 )(SingUpPage)

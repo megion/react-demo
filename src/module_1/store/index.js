@@ -5,7 +5,7 @@ import randomId from "../middlewares/randomId"
 import api from "../middlewares/api"
 import thunk from "redux-thunk"
 import createSagaMiddleware from 'redux-saga'
-import {saga} from '../ducks/people'
+import rootSaga from '../saga'
 // Logger with default options
 import logger from "redux-logger"
 
@@ -32,6 +32,6 @@ let store = createStore(reducer, enhancer)
 window.store = store
 
 // then run the saga
-sagaMiddleware.run(saga)
+sagaMiddleware.run(rootSaga)
 
 export default store
