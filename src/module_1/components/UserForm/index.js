@@ -3,12 +3,14 @@ import { connect } from "react-redux"
 import { changeArticleSelection } from "../../AC"
 import PropTypes from "prop-types"
 import Select from "react-select"
+import Loader from "../Loader"
+import { signOutRequest, moduleName as authModuleName } from "../../ducks/auth"
 import common from "common" // common library
 
 class UserForm extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired,
-    selectedArticles: PropTypes.array
+    selectedArticles: PropTypes.array,
   }
 
   constructor(props) {
@@ -23,8 +25,20 @@ class UserForm extends Component {
    * build virtual DOM
    */
   render() {
+    const { auth } = this.props
     return (
       <div>
+        <div>
+          {auth.loading && <Loader />}
+          {auth.error && (
+            <div style={{ color: "red" }}>
+              <code>{JSON.stringify(auth.error, null, 2)}</code>
+            </div>
+          )}
+          <button onClick={this.handleSignOut} className="btn btn-primary">
+            Sign out
+          </button>
+        </div>
         <form>
           <div className="form-group">
             <label htmlFor="userName">User name</label>
@@ -60,6 +74,10 @@ class UserForm extends Component {
     )
   }
 
+  handleSignOut = () => {
+    this.props.signOutRequest()
+  }
+
   onChangeUsername = ev => {
     // limit max length
     if (ev.target.value.length > 10) {
@@ -82,7 +100,8 @@ export default connect(
     return {
       articles: common.helpers.immutableMapToArr(state.articles.entities),
       selectedArticles: state.filters.selectedArticles,
+      auth: state[authModuleName],
     }
   },
-  { changeArticleSelection } // map reducer function to props
+  { changeArticleSelection, signOutRequest } // map reducer function to props
 )(UserForm)

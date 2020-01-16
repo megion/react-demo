@@ -4,10 +4,15 @@ import reducer from "../reducer"
 import randomId from "../middlewares/randomId"
 import api from "../middlewares/api"
 import thunk from "redux-thunk"
-import createSagaMiddleware from 'redux-saga'
-import rootSaga from '../saga'
+import createSagaMiddleware from "redux-saga"
+import rootSaga from "../saga"
 // Logger with default options
 import logger from "redux-logger"
+
+// initialize firebase
+import { initializeFirebase } from "./firebase"
+
+initializeFirebase()
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
