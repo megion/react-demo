@@ -52,6 +52,7 @@
     "@types/react-transition-group": "^4.2.2",
     "bootstrap": "^4.3.1",
     "firebase": "^7.6.1",
+    "firebase-functions-test": "^0.1.7",
     "flag-icon-css": "^3.3.0",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.15",

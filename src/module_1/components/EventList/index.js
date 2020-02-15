@@ -9,7 +9,7 @@ import { loadAllArticles } from "../../AC"
 import "./index.less"
 import common from "common" // common library
 
-class ArticleList extends Component {
+class EventList extends Component {
   static propTypes = {
     // from redux connect
     articles: PropTypes.object.isRequired,
@@ -64,12 +64,9 @@ class ArticleList extends Component {
 export default connect(
   state => {
     return {
-      articles: filtrateArticlesSelector(state),
-      loading: state.articles.loading,
-      loaded: state.articles.loaded,
+      articles: state.events.entities,
     }
   },
   { loadAllArticles }, // map reducer function to props
-  null,
-  { pure: false }
-)(common.accordion(ArticleList))
+  null
+)(EventList)

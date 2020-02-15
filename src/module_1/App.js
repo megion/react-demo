@@ -5,6 +5,7 @@ import Counter from "./components/Counter"
 import ArticlePage from "./routes/ArticlePage"
 import SignUpPage from "./routes/SignUpPage"
 import SignInPage from "./routes/SignInPage"
+import EventsPage from "./routes/EventsPage"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import logo from "./logo.svg"
 import "./App.less"
@@ -76,6 +77,11 @@ class App extends Component {
                     Sign up
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/events" activeClassName="app-link_active">
+                    Events
+                  </NavLink>
+                </li>
               </ul>
 
               <hr />
@@ -119,6 +125,10 @@ class App extends Component {
 
                 <Route path="/sign-up">
                   <SignUpPage />
+                </Route>
+
+                <Route path="/events">
+                  <EventsPage />
                 </Route>
 
                 <Route path="/sign-in">
