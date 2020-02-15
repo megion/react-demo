@@ -22,6 +22,8 @@ const SIGN_UP_ERROR = `${appName}/${moduleName}/SIGN_UP_ERROR`
 const SIGN_IN_REQUEST = `${appName}/${moduleName}/SIGN_IN_REQUEST`
 const SIGN_IN_SUCCESS = `${appName}/${moduleName}/SIGN_IN_SUCCESS`
 
+/**
+ */
 const SIGN_OUT_REQUEST = `${appName}/${moduleName}/SIGN_OUT_REQUEST`
 const SIGN_OUT_SUCCESS = `${appName}/${moduleName}/SIGN_OUT_SUCCESS`
 const SIGN_OUT_ERROR = `${appName}/${moduleName}/SIGN_OUT_ERROR`
