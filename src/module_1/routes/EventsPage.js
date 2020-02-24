@@ -1,8 +1,7 @@
 import React, { Component } from "react"
-import { connect } from "react-redux"
-import { signIn } from "../ducks/auth"
+import EventList from "../components/EventList"
 
-class EventsPage extends Component {
+export class EventsPage extends Component {
   static propTypes = {}
 
   constructor(props) {
@@ -13,12 +12,8 @@ class EventsPage extends Component {
     return (
       <div>
         <p>Events</p>
+        <EventList />
       </div>
     )
   }
 }
-
-export default connect(
-  null,
-  { signIn } // map reducer function to props
-)(EventsPage)

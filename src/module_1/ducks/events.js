@@ -2,9 +2,9 @@
  * duck widget. See https://github.com/erikras/ducks-modular-redux
  */
 import { OrderedMap, Record } from "immutable"
-import { put, takeEvery, call } from "redux-saga/effects"
-import common from "common" // common library
+import { put, all, call } from "redux-saga/effects"
 import { appName } from "../../../app.config"
+import { createSelector } from "reselect"
 
 const StateRecord = Record({
   entities: new OrderedMap([]),
@@ -12,11 +12,15 @@ const StateRecord = Record({
   loaded: false,
 })
 
-const PersonRecord = Record({
-  id: null,
-  firstName: null,
-  lastName: null,
-  email: null,
+const EventRecord = Record({
+  uid: null,
+  title: null,
+  url: null,
+  where: null,
+  when: null,
+  month: null,
+  month: null,
+  submissionDeadLine: null
 })
 
 export const moduleName = "events"
@@ -29,11 +33,19 @@ export const GET_ALL_SUCCESS = `${prefix}/GET_ALL_SUCCESS`
 export default function reducer(state = StateRecord(), action = {}) {
   const { payload } = action
   switch (action.type) {
-    case ADD_PERSON:
-      return state.update("entities", entities => {
-        return entities.push(PersonRecord(payload.person))
-      })
+    case GET_ALL_REQUEST:
+      return state.set("loading", true)
 
+    case GET_ALL_SUCCESS:
+      /*
+       * return array of all articles
+       */
+      return (
+        state
+          .set("entities", new OrderedMap(payload))
+          .set("loading", false)
+          .set("loaded", true)
+      )
     default:
       return state
   }
@@ -46,26 +58,47 @@ export function getAllRequest() {
   }
 }
 
+export function getAllSuccess(events) {
+  return {
+    type: GET_ALL_SUCCESS,
+    payload: {events}
+  }
+}
+
 export function* getAllSaga() {
   while (true) {
     // filter only this action
-    const action = yield take(GET_ALL_REQUEST)
+    yield take(GET_ALL_REQUEST)
     const ref = firebase.database().ref("events")
-    const data = yield call([ref, ref.once])
-    const auth = firebase.auth()
-    try {
-      const user = yield call(
-        [auth, auth.createUserWithEmailAndPassword],
-        action.payload.email,
-        action.payload.password
-      )
-      yield put(signUpSuccess(user))
-    } catch (error) {
-      yield put(signUpError(error))
-    }
+    const data = yield call([ref, ref.once], "value")
+
+    yield put(getAllSuccess(data.val()))
   }
 }
 
 export function* saga() {
-  yield takeEvery(ADD_PERSON_REQUEST, addPersionSaga)
+  yield all([getAllSaga])
 }
+
+const eventsSelector = state => state[moduleName].entities
+const filtersSelector = state => state.filters
+
+export const filtrateArticlesSelector = createSelector(
+  articlesSelector,
+  filtersSelector,
+  (articles, filters) => {
+    const selectedArticles = filters.selectedArticles
+    //console.log("filtrateArticles, articles: ", articles)
+    //console.log("filtrateArticles, filters: ", filters)
+    /*
+     * filter articles here using selectedArticles
+     */
+    let filteredArticles = articles;
+    if(selectedArticles && selectedArticles.length) {
+      filteredArticles = common.helpers.filterMap(articles, (id, article) => {
+        return _.find(selectedArticles, { id: article.id }) ? true : false
+      })
+    }
+    return filteredArticles
+  }
+)

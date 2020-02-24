@@ -4,15 +4,14 @@ import { connect } from "react-redux"
 import { NavLink } from "react-router-dom"
 //import Article from "../Article"
 import Loader from "../Loader"
-import { filtrateArticlesSelector } from "../../selectors/articles"
-import { loadAllArticles } from "../../AC"
+import { getAllRequest, moduleName as eventsModuleName } from "../ducks/events"
 import "./index.less"
 import common from "common" // common library
 
 class EventList extends Component {
   static propTypes = {
     // from redux connect
-    articles: PropTypes.object.isRequired,
+    events: PropTypes.object.isRequired,
     // from accordion
     openItemId: PropTypes.string,
     toggleOpenItem: PropTypes.func.isRequired,
@@ -24,7 +23,7 @@ class EventList extends Component {
 
   componentDidMount() {
     if (!this.props.loaded && !this.props.loading) {
-      this.props.loadAllArticles()
+      this.props.getAllRequest()
     }
   }
 
@@ -63,10 +62,7 @@ class EventList extends Component {
 
 export default connect(
   state => {
-    return {
-      articles: state.events.entities,
-    }
+    return { events: state[eventsModuleName].entities }
   },
-  { loadAllArticles }, // map reducer function to props
-  null
+  { getAllRequest } // map reducer function to props
 )(EventList)

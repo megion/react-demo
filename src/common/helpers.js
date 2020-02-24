@@ -59,6 +59,12 @@ function generateId() {
   return (Date.now() + Math.random()).toString()
 }
 
+function firebaseDataToEntities(data, ModelRecord) {
+  return new OrderedMap(data).mapEntries(([uid, value]) => {
+    ;[uid, new ModelRecord(value).set("uid", uid)]
+  })
+}
+
 export default {
   arrToMap,
   arrToImmutableMap,
@@ -67,4 +73,5 @@ export default {
   filterMap,
   sum,
   generateId,
+  firebaseDataToEntities,
 }
