@@ -51,26 +51,33 @@ module.exports = {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
   ],
 
   resolve: {
-    alias: {
-      common$: path.resolve(__dirname, "src/common/index.js"),
-    },
+    extensions: [".tsx", ".ts", ".js"],
+    //alias: {
+      //common$: path.resolve(__dirname, "src/common/index.js"),
+    //},
   },
 
   module: {
     rules: [
       {
-        test: /\.js$/,
-        //exclude: /node_modules/,
-        include: /src/,
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-env"],
-        },
-        // options for the loader
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
+      //{
+        //test: /\.js$/,
+        ////exclude: /node_modules/,
+        //include: /src/,
+        //loader: "babel-loader",
+        //options: {
+          //presets: ["@babel/preset-env"],
+        //},
+        //// options for the loader
+      //},
       //{
         //test: /\.js$/,
         //use: ["source-map-loader"],
@@ -108,37 +115,12 @@ module.exports = {
             options: {
               //name: '[name].[ext]'
               name: function(file) {
-                //if (devMode) {
-                //return '[path][name].[ext]';
-                //}
                 return "[path][name].[hash].[ext]"
               },
             },
           },
         ],
       },
-      //{
-      //test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
-      //use: [
-      //{
-      //loader: 'url-loader',
-      //options: {
-      //name: function(file) {
-      //if (devMode) {
-      //return '[path][name].[ext]';
-      //}
-
-      //return '[hash].[ext]';
-      //},
-      //limit: 4096
-      //}
-      //}
-      //]
-      //}
     ],
-    // since webpack 3.0.0
-    //noParse: function(content) {
-    //return /moment|lodash/.test(content);
-    //}
   },
 }
